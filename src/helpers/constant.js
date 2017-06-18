@@ -1,5 +1,6 @@
 import {
-    LASTFM_KEY, METRO_LYRICS_KEY, YOUTUBE_KEY_ONE, YOUTUBE_KEY_TWO
+    LASTFM_KEY, METRO_LYRICS_KEY, SOUNDCLOUD_KEY,
+    YOUTUBE_KEY_ONE, YOUTUBE_KEY_TWO
 } from './key';
 
 
@@ -49,7 +50,7 @@ export const METRO_LYRICS_DEFAULT_API = METRO_LYRICS_KEY;
 
 //youtube constants
 export const YOUTUBE_BASE = 'https://www.googleapis.com/youtube/v3/';
-export const YOUTUBER_SEARCH = YOUTUBE_BASE + 'search?q=';
+export const YOUTUBE_SEARCH = YOUTUBE_BASE + 'search?q=';
 export const YOUTUBE_VIDEO_INFO = YOUTUBE_BASE + 'videos?id=';
 export const YOUTUBE_RELATED = YOUTUBE_BASE + 'search?relatedToVideoId=';
 export const YOUTUBE_CHART = YOUTUBE_BASE + 'videos?chart=';
@@ -64,4 +65,33 @@ export const YOUTUBE_VIDEO_CATEGORY_ID = '&videoCategoryId=10';
 export const YOUTUBE_PART = '&part=';
 export const YOUTUBE_NEXT_PAGE = '&pageToken=';
 export const YOUTUBE_DEFAULTS = YOUTUBE_RESULT_TYPE + YOUTUBE_SAFE_SEARCH + YOUTUBE_VIDEO_CATEGORY_ID;
+export const YOUTUBE_MATCH_BASE = 'https://www.youtube.com/watch?v=';
+
+
+
+//match urls
+
+export const MP3PM_BASE = 'http://mp3pn.biz/';
+export const MP3PM_SEARCH = MP3PM_BASE + 'search/s/f/';
+export const MP3PM_LAST = '/';
+
+
+export const MP3COLD_BASE = 'http://www.mp3cold.com/';
+export const MP3COLD_LAST = '/';
+
+export const PLEER_BASE = 'http://pleer.com/search?q=';
+export const PLEER_PAGE = '&page=';
+export const PLEER_DEFAULTS = '&sort_mode=0&sort_by=0&onlydata=true&target=track';
+export const PLEER_TRACK_LINK = 'http://pleer.com/site_api/files/get_url?action=download&id=';
+
+
+export const MIMP3_BASE = 'http://www.mimp3s.com/';
+export const MIMP3_LAST = '-mp3.html';
+
+export const SOUNDCLOUD_BASE = 'https://api.soundcloud.com/search/sounds';
+export const SOUNDCLOUD_API = SOUNDCLOUD_BASE + '?client_id=';
+export const SOUNDCLOUD_LIMIT= '&limit=';
+export const SOUNDCLOUD_QUERY = '&q=';
+export const SOUNDCLOUD_DEFAULT_KEY = SOUNDCLOUD_KEY;
+
 

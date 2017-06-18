@@ -4,8 +4,7 @@ import body_parser from 'body-parser';
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 2003;
-import { search, search_related, new_tracks, track_info, track_artwork } from './src/providers/meta/youtube';
-import { artist_artwork, album_artwork } from './src/providers/meta/deezer';
+import { match } from './src/providers/match/mp3cold';
 //app use
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
@@ -13,15 +12,18 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 
 app.listen(port, () => {
-	album_artwork({
-		q: 'Ik Vari Aa', query: 'Arijit Singh',
-		album_name: 'V', artist_name: 'Maroon 5',
+	match({
+		q: 'Ik Vari Aa', query: 'music remix live',
+		radio:'world',
+		name: 'maps', album_name: 'V', artist_name: 'maroon 5',
 		artist_id: '6695979', album_id: '8670885',
-		video_id: 'o7p03LdvT9c', related_video_id: 'o7p03LdvT9c',
+		video_id: 'fyaI4-5849w', related_video_id: 'o7p03LdvT9c',
 		artistName: 'Marron 5', track_name: 'Maps',
-		api_key: 'AIzaSyAT-Jp6JQ7aasuP6-30rBgBmsyPXTJGXwQ', limit: 10,
+		bit_rate: '196', size:'3', 
+		download_url:'11276652PAAn',
+		api_key: 'fb498db02133619b5d0e22199a878998', limit: 10,
 	}, (e, s) => {
-		console.log(s.result);
+		console.log(s);
 	});
 	// album_artwork({
 	// 	q: 'Ik Vari Aa', query: 'Arijit Singh',

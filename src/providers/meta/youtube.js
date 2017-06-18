@@ -1,9 +1,9 @@
 const parallel = require('run-parallel');
 import { make_request } from '../../helpers/internet';
 import {
-	YOUTUBE_API, YOUTUBE_DEFAULT_API_KEY, YOUTUBE_DEFAULTS, YOUTUBE_EVENT_TYPE, 
+	YOUTUBE_API, YOUTUBE_DEFAULT_API_KEY, YOUTUBE_DEFAULTS, YOUTUBE_EVENT_TYPE,
 	YOUTUBE_RELATED, YOUTUBE_MAX_RESULT, YOUTUBE_ORDER, YOUTUBE_PART,
-	YOUTUBE_VIDEO_INFO, YOUTUBER_SEARCH, YOUTUBE_NEXT_PAGE, YOUTUBE_CHART
+	YOUTUBE_VIDEO_INFO, YOUTUBE_SEARCH, YOUTUBE_NEXT_PAGE, YOUTUBE_CHART
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
 import {
@@ -58,7 +58,6 @@ export const track_info = (opts, callback) => {
 		const limit = opts.limit || 20;
 		const order = opts.order || Type.YOUTUBE_ORDER_TYPE.RELEVENCE;
 		const part = opts.part || Type.YOUTUBE_PART_TYPE.SNIPPET;
-
 
 		let common = video_id + YOUTUBE_PART + part + YOUTUBE_API + api_key + YOUTUBE_MAX_RESULT + limit +
 			YOUTUBE_ORDER + order + YOUTUBE_DEFAULTS;
@@ -163,7 +162,7 @@ export const new_tracks = (opts, callback) => {
 	}
 }
 
-export const track_artwork = (opts, callback)=>{
+export const track_artwork = (opts, callback) => {
 	const api_key = opts.api_key || YOUTUBE_DEFAULT_API_KEY || null;
 	const query = opts.query || null;
 	if (query && api_key) {
@@ -182,7 +181,6 @@ export const track_artwork = (opts, callback)=>{
 				if (response) {
 					const search = response._search_track;
 					const tracks = parse_youtube_tracks(search.items);
-
 					const data = {
 						meta: { opts, next_page: search.nextPageToken },
 						result: {

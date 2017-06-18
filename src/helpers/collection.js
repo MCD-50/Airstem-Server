@@ -205,12 +205,41 @@ export const parse_youtube_tracks = (search) => {
 		});
 }
 
+
+export const parse_youtube_match = (formats) => {
+	return formats
+		.map(x => {
+			return {
+				type: x.format.includes('audio') ? Type.YOUTUBE_TRACK : Type.YOUTUBE_VIDEO,
+				width: x.width || null,
+				height: x.height || null,
+				url: x.url,
+				extension: x.ext
+			}
+		});
+}
+
+export const parse_soundcloud_tracks = (tracks, api_key) => {
+	return tracks
+		.map(x => {
+			return {
+				type: Type.SOUNDCLOUD_TRACK,
+				download_url: x.stream_url + '?client_id=' + api_key || null,
+				stream_url: x.stream_url + '?client_id=' + api_key || null,
+				song_length: x.duration || null,
+				title: x.title || null,
+				bit_rate: null,
+				size: null
+			}
+		}).filter(x => x.stream_url);
+}
+
 export const parse_youtube_images = (image) => {
 	return Object.keys(image)
 		.map(x => {
 			return {
-				url : image[x].url || '',
-				size : x
+				url: image[x].url || '',
+				size: x
 			}
 		}).filter(y => y.url !== '');
 }
