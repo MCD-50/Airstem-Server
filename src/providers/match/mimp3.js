@@ -23,6 +23,7 @@ export const match = (opts, callback) => {
 				// Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 				let items = [];
 				const $html = cheerio.load(response.body);
+
 				$html('ul.mp3-list').children().each(function (i, e) {
 					if (e.tagName === 'li') {
 						const detail_div = $html(this).children().children();
@@ -47,7 +48,7 @@ export const match = (opts, callback) => {
 						download_url: 'http://www.mimp3s.live/' + x.download_url,
 						stream_url: 'http://www.mimp3s.live/' + x.stream_url
 					})
-				})
+				});
 
 				download_link(items, (res) => {
 					is_online(res, (res1) => {
@@ -82,11 +83,17 @@ const download_link = (items, callback) => {
 				if (response) {
 					const $html = cheerio.load(response.body);
 					const download_url = $html('a.dlink').attr('href')
-					items[index]['download_url'] = download_url;
-					items[index]['stream_url'] = download_url;
+					if (download_url) {
+						items[index]['download_url'] = download_url;
+						items[index]['stream_url'] = download_url;
+					} else {
+						items[index]['download_url'] = null;
+						items[index]['stream_url'] = null;
+					}
 				} else {
 					items[index]['download_url'] = null;
 					items[index]['stream_url'] = null;
+
 				}
 				resolve();
 			})

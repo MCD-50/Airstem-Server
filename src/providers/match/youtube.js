@@ -58,14 +58,14 @@ export const match_fast = (opts, callback) => {
 }
 
 const get_url = (video_ids, callback) => {
-	const videos = [];
+	let videos = [];
 	let requests = video_ids.map((x, index) => {
 		const video_url = YOUTUBE_MATCH_BASE + x;
-
 		return new Promise((resolve, reject) => {
 			youtubedl.getInfo(video_url, ['--format=18'], { cwd: __dirname, maxBuffer: 1000 * 1024 }, (error, response) => {
 				if (!error && response) {
-					videos.push(parse_youtube_match(response.formats.filter(x => x.format !== undefined), x));
+					const items = parse_youtube_match(response.formats.filter(x => x.format !== undefined), x);
+					videos = videos.concat(items);
 				}
 				resolve();
 			});
