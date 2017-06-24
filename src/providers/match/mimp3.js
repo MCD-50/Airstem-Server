@@ -49,14 +49,19 @@ export const match = (opts, callback) => {
 					})
 				})
 
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.MIMP3_MATCH,
-						match: opts.manual_match ? items : get_closest_track_match(common, items, 'title', 50)
-					}
-				}
-				callback(false, data);
+				download_link(items, (res) => {
+					is_online(res, (res1) => {
+						const data = {
+							meta: { opts },
+							result: {
+								type: Type.MIMP3_MATCH,
+								match: opts.manual_match ? res1 : get_closest_track_match(common, res1, 'title', 50)
+							}
+						}
+						callback(false, data);
+					});
+				});
+
 			} else {
 				callback(true, null);
 			}
@@ -66,35 +71,28 @@ export const match = (opts, callback) => {
 	}
 }
 
-export const download_link = (opts, callback) => {
-	const download_url = opts.download_url || null;
-	if (download_url) {
-		const url_match = download_url;
-		request(url_match, (error, response, html) => {
-			if (response) {
-				const $html = cheerio.load(response.body);
-				const download_url = $html('a.dlink').attr('href')
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.MIMP3_MATCH,
-						match: {
-							type: Type.MIMP3_TRACK,
-							download_url: download_url,
-							stream_url: download_url,
-							song_length: opts.song_length || null,
-							title: opts.title || null,
-							bit_rate: opts.bit_rate || null,
-							size: opts.size || null
-						}
-					}
+const download_link = (items, callback) => {
+	const _items = items;
+
+	let requests = _items.map((x, index) => {
+		const url_match = x.download_url;
+
+		return new Promise((resolve, reject) => {
+			request(url_match, (error, response, html) => {
+				if (response) {
+					const $html = cheerio.load(response.body);
+					const download_url = $html('a.dlink').attr('href')
+					items[index]['download_url'] = download_url;
+					items[index]['stream_url'] = download_url;
+				} else {
+					items[index]['download_url'] = null;
+					items[index]['stream_url'] = null;
 				}
-				callback(false, data);
-			} else {
-				callback(true, null);
-			}
-		})
-	} else {
-		callback(true, null);
-	}
+				resolve();
+			})
+		});
+	});
+
+	Promise.all(requests)
+		.then(() => callback(items.filter(x => x.download_url !== null && x.download_url !== undefined)));
 }

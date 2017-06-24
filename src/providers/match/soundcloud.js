@@ -1,5 +1,6 @@
-const parallel = require('run-parallel');
-import { make_request } from '../../helpers/internet';
+const request = require('request');
+import { make_request, is_online } from '../../helpers/internet';
+
 import {
 	SOUNDCLOUD_API, SOUNDCLOUD_DEFAULT_KEY,
 	SOUNDCLOUD_LIMIT, SOUNDCLOUD_QUERY
@@ -20,19 +21,22 @@ export const match = (opts, callback) => {
 
 		const url_match = SOUNDCLOUD_API + api_key + SOUNDCLOUD_QUERY + common + SOUNDCLOUD_LIMIT + limit;
 
-		parallel({
-			_tracks: x => make_request(url_match, x),
-		}, (error, response) => {
-			if (response) {
-				const tracks = parse_soundcloud_tracks(response._tracks.collection, api_key);
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.SOUNDCLOUD_MATCH,
-						match: opts.manual_match ? items : get_closest_track_match(common, tracks, 'title', false, 50)
+		request(url_match, (error, response) => {
+			if (response && response.body) {
+				const body = JSON.parse(response.body);
+				const items = parse_soundcloud_tracks(body.collection, api_key);
+				
+				is_online(items, res => {
+					const data = {
+						meta: { opts },
+						result: {
+							type: Type.SOUNDCLOUD_MATCH,
+							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', false, 50)
+						}
 					}
-				}
-				callback(true, data);
+					callback(false, data);
+				});
+
 			} else {
 				callback(true, null);
 			}

@@ -1,6 +1,6 @@
 const request = require('request');
 const cheerio = require('cheerio');
-import { make_request } from '../../helpers/internet';
+import { make_request, is_online } from '../../helpers/internet';
 import {
 	MP3PM_BASE, MP3PM_SEARCH, MP3PM_LAST
 } from '../../helpers/constant';
@@ -39,14 +39,17 @@ export const match = (opts, callback) => {
 						})
 					}
 				});
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.MP3PM_MATCH,
-						match: opts.manual_match ? items : get_closest_track_match(common, items, 'title', false, 40)
+
+				is_online(items, (res) => {
+					const data = {
+						meta: { opts },
+						result: {
+							type: Type.MP3PM_MATCH,
+							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
+						}
 					}
-				}
-				callback(false, data);
+					callback(false, data);
+				});
 			} else {
 				callback(true, null);
 			}
@@ -63,7 +66,7 @@ export const radio = (opts, callback) => {
 	request(url_radio, (error, response, html) => {
 		if (!error && response.statusCode == 200) {
 			// Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-			const items = [];
+			let items = [];
 			const $html = cheerio.load(response.body);
 			$html('ul.mp3list').children().each(function (i, e) {
 				if (e.tagName === 'li') {
@@ -84,15 +87,16 @@ export const radio = (opts, callback) => {
 					&& (x.download_url !== null && x.download_url !== undefined &&
 						x.stream_url !== null && x.stream_url !== undefined));
 
-
-			const data = {
-				meta: { opts },
-				result: {
-					type: Type.MP3PM_MATCH,
-					radio: items
-				}
-			}
-			callback(false, data);
+			is_online(items, (res) => {
+					const data = {
+						meta: { opts },
+						result: {
+							type: Type.MP3PM_MATCH,
+							radio: res
+						}
+					}
+					callback(false, data);
+				});
 		} else {
 			callback(true, null);
 		}

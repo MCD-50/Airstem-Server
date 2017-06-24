@@ -4,42 +4,32 @@ import body_parser from 'body-parser';
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 2003;
-import { match } from './src/providers/match/mp3cold';
+import { manual_match } from './src/engine/match';
+
 //app use
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 app.use(express.static(path.join(__dirname, 'src')));
 
-
 app.listen(port, () => {
-	match({
+	manual_match({
 		q: 'Ik Vari Aa', query: 'music remix live',
-		radio:'world',
+		radio: 'world', manual_match: true,
+		video_ids:['o7p03LdvT9c'],
 		name: 'maps', album_name: 'V', artist_name: 'maroon 5',
 		artist_id: '6695979', album_id: '8670885',
 		video_id: 'fyaI4-5849w', related_video_id: 'o7p03LdvT9c',
 		artistName: 'Marron 5', track_name: 'Maps',
-		bit_rate: '196', size:'3', 
-		download_url:'11276652PAAn',
+		bit_rate: '196', size: '3',
+		download_url: '11276652PAAn',
 		api_key: 'fb498db02133619b5d0e22199a878998', limit: 10,
-	}, (e, s) => {
-		console.log(s);
+	}, (res) => {
+		console.log(res);
 	});
-	// album_artwork({
-	// 	q: 'Ik Vari Aa', query: 'Arijit Singh',
-	// 	album_name: 'V', artist_name: 'Maroon 5',
-	// 	artistName: 'Marron 5', track_name:'Maps',
-	// 	api_key: 'a2be27fc57d01bb6c2f982cf639df152', limit: 10
-	// }, (e, s) => {
-	// 	console.log(s);
-	// });
 });
 
 app.get('/', (req, res) => {
 	res.json({
-
-
-
 		match: '/match => return url of track => {input:{track_name, artist_name, album_name, id}}',
 		lyrics: '/lyrics => return lyrics of track => {input:{track_name, artist_name}}',
 

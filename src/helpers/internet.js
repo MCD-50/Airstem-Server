@@ -6,21 +6,32 @@ export const make_request = (url, callback, is_url_encode = false) => {
 		.catch((rej) => callback(rej, null));
 }
 
-export const is_online = (url, callback) => {
-	const options = {
-		url: url,
-		method: 'HEAD',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
+export const is_online = (items, callback) => {
+	const _items = items;
+	let requests = _items.map((x, index) => {
+		const options = {
+			url: x.download_url,
+			method: 'HEAD',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
 		}
-	}
-	request(options, (error, response) => {
-		if (!error && response.statusCode == 200) {
-			callback(null, response.headers);
-		} else {
-			callback(true, null);
-		}
-	})
+
+		return new Promise((resolve, reject) => {
+			request(options, (error, response) => {
+				if (!error && response.statusCode == 200 && response.headers &&
+					response.headers['content-type'] && response.headers['content-type'].includes('audio')) {
+					items[index]['is_online'] = true
+				} else {
+					items[index]['is_online'] = false
+				}
+				resolve();
+			})
+		});
+	});
+
+	Promise.all(requests)
+		.then(() => callback(items));
 }
 
 export const resolve_request = (url, is_url_encode) => {

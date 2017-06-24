@@ -1,8 +1,7 @@
-const parallel = require('run-parallel');
 const request = require('request');
 const cheerio = require('cheerio');
 
-import { make_request } from '../../helpers/internet';
+import { make_request, is_online } from '../../helpers/internet';
 import {
 	PLEER_BASE, PLEER_DEFAULTS, PLEER_PAGE, PLEER_TRACK_LINK
 } from '../../helpers/constant';
@@ -52,14 +51,19 @@ export const match = (opts, callback) => {
 					items = items.filter(x => x.bit_rate.split(' ')[0] >= opts.bit_rate)
 				}
 
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.PLEER_MATCH,
-						match: opts.manual_match ? items : get_closest_track_match(common, items, 'title', false, 40)
-					}
-				}
-				callback(false, data);
+				download_link(items, (res) => {
+					is_online(res, res1 => {
+						const data = {
+							meta: { opts },
+							result: {
+								type: Type.PLEER_MATCH,
+								match: opts.manual_match ? res1 : get_closest_track_match(common, res1, 'title', false, 40)
+							}
+						}
+						callback(false, data);
+					})
+				});
+
 			} else {
 				callback(true, null);
 			}
@@ -69,37 +73,27 @@ export const match = (opts, callback) => {
 	}
 }
 
-export const download_link = (opts, callback) => {
-	const download_url = opts.download_url || null;
-	if (download_url) {
-		const track_url = PLEER_TRACK_LINK + download_url;
-		parallel({
-			_match: x => make_request(track_url, x, true),
-		}, (error, response) => {
-			if (response) {
-				const res = response._match;
+const download_link = (items, callback) => {
 
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.PLEER_MATCH,
-						match: {
-							type: Type.PLEER_TRACK,
-							download_url: res.track_link,
-							stream_url: res.track_link,
-							song_length: opts.song_length || null,
-							title: opts.title || null,
-							bit_rate: opts.bit_rate || null,
-							size: opts.size || null
-						}
-					}
+	const _items = items;
+
+	let requests = _items.map((x, index) => {
+		const track_url = PLEER_TRACK_LINK + x.download_url;
+
+		return new Promise((resolve, reject) => {
+			make_request(track_url, (err, res) => {
+				if (res) {
+					items[index]['download_url'] = res.track_link;
+					items[index]['stream_url'] = res.track_link;
+				} else {
+					items[index]['download_url'] = null;
+					items[index]['stream_url'] = null;
 				}
-				callback(false, data);
-			} else {
-				callback(true, null);
-			}
-		})
-	} else {
-		callback(true, null);
-	}
+				resolve();
+			}, true)
+		});
+	});
+
+	Promise.all(requests)
+		.then(() => callback(items.filter(x => x.download_url !== null && x.download_url !== undefined)));
 }

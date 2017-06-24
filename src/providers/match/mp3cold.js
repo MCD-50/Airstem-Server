@@ -1,6 +1,6 @@
 const request = require('request');
 const cheerio = require('cheerio');
-import { make_request } from '../../helpers/internet';
+import { make_request, is_online } from '../../helpers/internet';
 import {
 	MP3COLD_BASE, MP3COLD_LAST
 } from '../../helpers/constant';
@@ -22,6 +22,7 @@ export const match = (opts, callback) => {
 				// Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 				let items = [];
 				const $html = cheerio.load(response.body);
+
 				$html('div.news_list').children().each(function (i, e) {
 					const attr = e.attribs.class || null;
 					if (attr && attr.includes('show')) {
@@ -29,9 +30,10 @@ export const match = (opts, callback) => {
 						const download_div = detail_div.last().prev().children();
 						items.push({
 							type: Type.MP3COLD_TRACK,
-							download_url: download_div.first().attr('href') + download_div.first().attr('download') || null,
-							stream_url: download_div.first().attr('href') + download_div.first().attr('download') || null,
+							download_url: download_div.first().attr('href') || null,
+							stream_url: download_div.first().attr('href') || null,
 							song_length: null,
+							id: download_div.first().attr('download') || null,
 							title: detail_div.first().children().text() || null,
 							bit_rate: detail_div.first().next().text().split('|')[0].trim().split(' ')[1] || null,
 							size: detail_div.first().next().text().split('|')[2].trim().split(' ')[2] || null
@@ -41,25 +43,32 @@ export const match = (opts, callback) => {
 
 				items = items.filter(x => (x.title && x.title.trim())
 					&& (x.download_url !== null && x.download_url !== undefined &&
-						x.stream_url !== null && x.stream_url !== undefined));
+						x.stream_url !== null && x.stream_url !== undefined
+						&& x.id !== null && x.id !== undefined));
 
 				items = items.map(x => {
-					return Object.assign(x, {
-						download_url: 'http://www.mp3cold.com' + x.download_url,
-						stream_url: 'http://www.mp3cold.com' + x.stream_url
-					})
-				})
-
-				console.log(items);
-
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.MP3COLD_MATCH,
-						match: opts.manual_match ? items : get_closest_track_match(common, items, 'title', 50)
+					return {
+						type: Type.MP3COLD_TRACK,
+						download_url: 'http://www.mp3cold.com' + x.download_url + x.id,
+						stream_url: 'http://www.mp3cold.com' + x.stream_url + x.id,
+						song_length: null,
+						title: x.title,
+						bit_rate: x.bit_rate,
+						size: x.size,
 					}
-				}
-				callback(false, data);
+				});
+
+				is_online(items, (res) => {
+					const data = {
+						meta: { opts },
+						result: {
+							type: Type.MP3COLD_MATCH,
+							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
+						}
+					}
+					callback(false, data);
+				});
+				
 			} else {
 				callback(true, null);
 			}

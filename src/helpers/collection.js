@@ -206,14 +206,15 @@ export const parse_youtube_tracks = (search) => {
 }
 
 
-export const parse_youtube_match = (formats) => {
+export const parse_youtube_match = (formats, id) => {
 	return formats
 		.map(x => {
 			return {
 				type: x.format.includes('audio') ? Type.YOUTUBE_TRACK : Type.YOUTUBE_VIDEO,
 				width: x.width || null,
 				height: x.height || null,
-				url: x.url,
+				download_url: x.url,
+				id: id,
 				extension: x.ext
 			}
 		});
