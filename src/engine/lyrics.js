@@ -6,6 +6,8 @@ import {
 } from '../helpers/constant';
 import { Type } from '../helpers/type';
 import { parse_metro_lyrics } from '../helpers/collection';
+import { get_response } from '../helpers/util';
+
 
 export const lyrics = (opts, callback) => {
 	const metro_api_key = opts.metro_api_key || METRO_LYRICS_DEFAULT_API || null;
@@ -22,19 +24,17 @@ export const lyrics = (opts, callback) => {
 			_lyrics: x => make_request(url_lyrics, x),
 		}, (error, response) => {
 			if (response) {
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.METRO_LYRICS,
-						lyrics: parse_metro_lyrics(response._lyrics)
-					}
-				}
+				const data = - get_response({ opts }, {
+					type: Type.METRO_LYRICS,
+					lyrics: parse_metro_lyrics(response._lyrics)
+				});
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }

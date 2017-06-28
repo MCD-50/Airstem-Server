@@ -15,6 +15,8 @@ import {
 	parse_lastfm_artist_info, parse_lastfm_albums, parse_lastfm_track_info
 } from '../../helpers/collection';
 
+import { get_response } from '../../helpers/util'
+
 
 export const search = (opts, callback) => {
 	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
@@ -49,25 +51,23 @@ export const search = (opts, callback) => {
 					} else {
 						next_page = null;
 					}
-					const data = {
-						meta: { opts, total, next_page },
-						result: {
-							type: Type.LASTFM_SEARCH,
-							artists: parse_lastfm_artists(response._artists.results.artistmatches.artist)
-								.sort((a, b) => (b.listeners) - (a.listeners)),
-							tracks: parse_lastfm_tracks(response._tracks.results.trackmatches.track)
-								.sort((a, b) => (b.listeners) - (a.listeners)),
-							albums: parse_lastfm_albums(response._albums.results.albummatches.album)
-						}
-					}
+
+					const data = get_response({ opts, total, next_page }, {
+						type: Type.LASTFM_SEARCH,
+						artists: parse_lastfm_artists(response._artists.results.artistmatches.artist)
+							.sort((a, b) => (b.listeners) - (a.listeners)),
+						tracks: parse_lastfm_tracks(response._tracks.results.trackmatches.track)
+							.sort((a, b) => (b.listeners) - (a.listeners)),
+						albums: parse_lastfm_albums(response._albums.results.albummatches.album)
+					})
 
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -86,17 +86,16 @@ export const artist_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const artist = response._artist_info.artist;
-				const data = {
-					meta: { opts },
-					result: parse_lastfm_artist_info(artist)
-				}
+				const data = get_response({ opts }, parse_lastfm_artist_info(artist))
+
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -116,17 +115,15 @@ export const album_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const album = response._album_info.album;
-				const data = {
-					meta: { opts },
-					result: parse_lastfm_album_info(album)
-				}
+				const data = get_response({ opts }, parse_lastfm_album_info(album))
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -147,17 +144,14 @@ export const track_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const track = response._track_info.track;
-				const data = {
-					meta: { opts },
-					result: parse_lastfm_track_info(track)
-				}
+				const data = get_response({ opts }, parse_lastfm_track_info(track))
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -179,20 +173,19 @@ export const artist_top_albums = (opts, callback) => {
 			_artist_albums: x => make_request(url_artist_album, x)
 		}, (error, response) => {
 			if (response) {
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.LASTFM_SEARCH,
-						albums: parse_lastm_albums(response._artist_albums.topalbums.album)
-					}
-				}
+				const data = get_response({ opts }, {
+					type: Type.LASTFM_SEARCH,
+					albums: parse_lastm_albums(response._artist_albums.topalbums.album)
+				})
+
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -215,20 +208,18 @@ export const artist_top_tracks = (opts, callback) => {
 			_artist_tracks: x => make_request(url_artist_track, x)
 		}, (error, response) => {
 			if (response) {
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.LASTFM_SEARCH,
-						tracks: parse_lastfm_tracks(response._artist_tracks.toptracks.track)
-					}
-				}
+				const data = get_response({ opts }, {
+					type: Type.LASTFM_SEARCH,
+					tracks: parse_lastfm_tracks(response._artist_tracks.toptracks.track)
+				})
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -249,21 +240,19 @@ export const trending_artist = (opts, callback) => {
 			_trending_artists: x => make_request(url_trending_artist, x)
 		}, (error, response) => {
 			if (response) {
+				const data = get_response({ opts }, {
+					type: Type.LASTFM_SEARCH,
+					artists: parse_lastfm_artists(response._trending_artists.artists.artist)
+				})
 
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.LASTFM_SEARCH,
-						artists: parse_lastfm_artists(response._trending_artists.artists.artist)
-					}
-				}
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -283,20 +272,19 @@ export const trending_tracks = (opts, callback) => {
 			_trending_tracks: x => make_request(url_trending_track, x)
 		}, (error, response) => {
 			if (response) {
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.LASTFM_SEARCH,
-						tracks: parse_lastfm_tracks(response._trending_tracks.tracks.track)
-					}
-				}
+				const data = get_response({ opts }, {
+					type: Type.LASTFM_SEARCH,
+					tracks: parse_lastfm_tracks(response._trending_tracks.tracks.track)
+				})
+
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -304,16 +292,15 @@ export const trending_tracks = (opts, callback) => {
 export const artist_artwork = (opts, callback) => {
 	artist_info(opts, (e, s) => {
 		if (s) {
-			const data = {
-				meta: s.meta,
-				result: {
-					type: Type.LASTFM_IMAGE,
-					images: s.result.images
-				}
-			}
+			const data = get_response(s.meta, {
+				type: Type.LASTFM_IMAGE,
+				images: s.result.images
+			})
+
+
 			callback(false, data);
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	})
 }
@@ -323,16 +310,14 @@ export const artist_artwork = (opts, callback) => {
 export const album_artwork = (opts, callback) => {
 	album_info(opts, (e, s) => {
 		if (s) {
-			const data = {
-				meta: s.meta,
-				result: {
-					type: Type.LASTFM_IMAGE,
-					images: s.result.images
-				}
-			}
+			const data = get_response(s.meta, {
+				type: Type.LASTFM_IMAGE,
+				images: s.result.images
+			})
+
 			callback(false, data);
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	})
 }

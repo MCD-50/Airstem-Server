@@ -188,6 +188,6 @@ export const new_data = (opts, callback) => {
 	});
 }
 
-export const radio = (opts, callback) => {
+export const radio = (callback) => {
 	callback({ messages: radio_stations, error: false });
 }

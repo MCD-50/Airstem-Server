@@ -55,5 +55,7 @@ export const Type = {
 	MP3COLD_TRACK: 'mp3cold_track',
 
 	SOUNDCLOUD_MATCH: 'soundcloud_match',
-	SOUNDCLOUD_TRACK: 'soundcloud_track'
+	SOUNDCLOUD_TRACK: 'soundcloud_track',
+
+	AISTEM_RADIO:'airstem_radio'
 }

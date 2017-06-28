@@ -5,7 +5,7 @@ import {
 	MP3PM_BASE, MP3PM_SEARCH, MP3PM_LAST
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
-import { get_closest_track_match } from '../../helpers/util';
+import { get_closest_track_match, get_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -41,21 +41,20 @@ export const match = (opts, callback) => {
 				});
 
 				is_online(items, (res) => {
-					const data = {
-						meta: { opts },
-						result: {
-							type: Type.MP3PM_MATCH,
-							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
-						}
-					}
+					const data = get_response({ opts }, {
+						type: Type.MP3PM_MATCH,
+						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
+					})
+
+
 					callback(false, data);
 				});
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -84,21 +83,21 @@ export const radio = (opts, callback) => {
 			});
 
 			items = items.filter(x => (x.title && x.title.trim())
-					&& (x.download_url !== null && x.download_url !== undefined &&
-						x.stream_url !== null && x.stream_url !== undefined));
+				&& (x.download_url !== null && x.download_url !== undefined &&
+					x.stream_url !== null && x.stream_url !== undefined));
 
 			is_online(items, (res) => {
-					const data = {
-						meta: { opts },
-						result: {
-							type: Type.MP3PM_MATCH,
-							radio: res
-						}
+				const data = {
+					meta: { opts },
+					result: {
+						type: Type.MP3PM_MATCH,
+						radio: res
 					}
-					callback(false, data);
-				});
+				}
+				callback(false, data);
+			});
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	});
 }

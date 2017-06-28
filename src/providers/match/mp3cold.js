@@ -5,7 +5,7 @@ import {
 	MP3COLD_BASE, MP3COLD_LAST
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
-import { get_closest_track_match } from '../../helpers/util';
+import { get_closest_track_match, get_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -59,21 +59,19 @@ export const match = (opts, callback) => {
 				});
 
 				is_online(items, (res) => {
-					const data = {
-						meta: { opts },
-						result: {
-							type: Type.MP3COLD_MATCH,
-							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
-						}
-					}
+					const data = get_response({ opts }, {
+						type: Type.MP3COLD_MATCH,
+						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
+					})
+
 					callback(false, data);
 				});
-				
+
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }

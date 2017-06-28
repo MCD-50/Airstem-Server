@@ -7,25 +7,23 @@ import {
 	parse_youtube_match
 } from '../../helpers/collection';
 import { is_online } from '../../helpers/internet';
-import { get_closest_track_match } from '../../helpers/util';
+import { get_closest_track_match, get_response } from '../../helpers/util';
 
 export const match = (opts, callback) => {
 	const video_ids = opts.video_ids;
 	if (video_ids && video_ids.length > 0) {
 		get_url(video_ids, res => {
 			is_online(res, res1 => {
-				const data = {
-					meta: { opts },
-					result: {
-						type: Type.YOUTUBE_MATCH,
-						match: res1
-					}
-				}
+				const data = get_response({ opts }, {
+					type: Type.YOUTUBE_MATCH,
+					match: res1
+				})
+
 				callback(false, data);
 			});
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -43,17 +41,16 @@ export const match_fast = (opts, callback) => {
 			}
 		})
 		is_online(video_ids, res => {
-			const data = {
-				meta: { opts },
-				result: {
-					type: Type.YOUTUBE_MATCH,
-					match: res
-				}
-			}
+			const data = get_response({ opts }, {
+				type: Type.YOUTUBE_MATCH,
+				match: res
+			})
+
+
 			callback(false, data);
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 

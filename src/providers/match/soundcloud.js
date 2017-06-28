@@ -7,7 +7,7 @@ import {
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
 import { parse_soundcloud_tracks } from '../../helpers/collection';
-import { get_closest_track_match } from '../../helpers/util';
+import { get_closest_track_match, get_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -25,23 +25,22 @@ export const match = (opts, callback) => {
 			if (response && response.body) {
 				const body = JSON.parse(response.body);
 				const items = parse_soundcloud_tracks(body.collection, soundcloud_api_key);
-				
+
 				is_online(items, res => {
-					const data = {
-						meta: { opts },
-						result: {
-							type: Type.SOUNDCLOUD_MATCH,
-							match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', false, 50)
-						}
-					}
+					const data = get_response({ opts }, {
+						type: Type.SOUNDCLOUD_MATCH,
+						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', false, 50)
+					})
+
+
 					callback(false, data);
 				});
 
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }

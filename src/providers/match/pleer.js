@@ -6,7 +6,7 @@ import {
 	PLEER_BASE, PLEER_DEFAULTS, PLEER_PAGE, PLEER_TRACK_LINK
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
-import { get_closest_track_match } from '../../helpers/util';
+import { get_closest_track_match, get_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -53,23 +53,22 @@ export const match = (opts, callback) => {
 
 				download_link(items, (res) => {
 					is_online(res, res1 => {
-						const data = {
-							meta: { opts },
-							result: {
-								type: Type.PLEER_MATCH,
-								match: opts.manual_match ? res1 : get_closest_track_match(common, res1, 'title', false, 40)
-							}
-						}
+						const data = get_response({ opts }, {
+							type: Type.PLEER_MATCH,
+							match: opts.manual_match ? res1 : get_closest_track_match(common, res1, 'title', false, 40)
+						})
+
+
 						callback(false, data);
 					})
 				});
 
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 

@@ -9,7 +9,7 @@ import { Type } from '../../helpers/type';
 import {
 	parse_youtube_tracks
 } from '../../helpers/collection';
-import { get_closest_image_match } from '../../helpers/util';
+import { get_closest_image_match, get_response } from '../../helpers/util';
 
 export const search = (opts, callback) => {
 	const youtube_api_key = opts.youtube_api_key || YOUTUBE_DEFAULT_API_KEY || null;
@@ -32,20 +32,19 @@ export const search = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._search_track;
-					const data = {
-						meta: { opts, next_page: search.nextPageToken },
-						result: {
-							type: Type.YOUTUBE_SEARCH,
-							tracks: parse_youtube_tracks(search.items)
-						}
-					}
+					const data = get_response({ opts, next_page: search.nextPageToken }, {
+						type: Type.YOUTUBE_SEARCH,
+						tracks: parse_youtube_tracks(search.items)
+					})
+
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -69,20 +68,18 @@ export const track_info = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const track_info = response._track_info;
-					const data = {
-						meta: { opts },
-						result: {
-							type: Type.YOUTUBE_SEARCH,
-							track: parse_youtube_tracks(track_info.items)[0]
-						}
-					}
+					const data = get_response({ opts }, {
+						type: Type.YOUTUBE_SEARCH,
+						track: parse_youtube_tracks(track_info.items)[0]
+					})
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -109,20 +106,19 @@ export const search_related = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._related_tracks;
-					const data = {
-						meta: { opts, next_page: search.nextPageToken },
-						result: {
-							type: Type.YOUTUBE_SEARCH,
-							tracks: parse_youtube_tracks(search.items)
-						}
-					}
+					const data = get_response({ opts, next_page: search.nextPageToken }, {
+						type: Type.YOUTUBE_SEARCH,
+						tracks: parse_youtube_tracks(search.items)
+					})
+
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -145,20 +141,18 @@ export const new_tracks = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._new_tracks;
-					const data = {
-						meta: { opts, next_page: search.nextPageToken },
-						result: {
-							type: Type.YOUTUBE_SEARCH,
-							tracks: parse_youtube_tracks(search.items)
-						}
-					}
+					const data = get_response({ opts, next_page: search.nextPageToken }, {
+						type: Type.YOUTUBE_SEARCH,
+						tracks: parse_youtube_tracks(search.items)
+					})
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -181,19 +175,18 @@ export const track_artwork = (opts, callback) => {
 				if (response) {
 					const search = response._search_track;
 					const tracks = parse_youtube_tracks(search.items);
-					const data = {
-						meta: { opts, next_page: search.nextPageToken },
-						result: {
-							type: Type.YOUTUBE_SEARCH,
-							images: get_closest_image_match(query, tracks, 'name')
-						}
-					}
+					const data = get_response({ opts, next_page: search.nextPageToken }, {
+						type: Type.YOUTUBE_SEARCH,
+						images: get_closest_image_match(query, tracks, 'name')
+					})
+
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }

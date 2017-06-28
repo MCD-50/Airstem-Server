@@ -7,10 +7,10 @@ import {
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
 import {
-	parse_deezer_artists, parse_deezer_tracks, parse_deezer_albums, 
+	parse_deezer_artists, parse_deezer_tracks, parse_deezer_albums,
 	parse_deezer_album_info, parse_deezer_artist_info
 } from '../../helpers/collection';
-import { get_closest_image_match } from '../../helpers/util';
+import { get_closest_image_match, get_response } from '../../helpers/util';
 
 export const search = (opts, callback) => {
 	const query = opts.query || null;
@@ -38,22 +38,21 @@ export const search = (opts, callback) => {
 					} else {
 						next_page = null;
 					}
-					const data = {
-						meta: { opts, total, next_page },
-						result: {
-							type: Type.DEEZER_SEARCH,
-							artists: parse_deezer_artists(response._artists.data),
-							tracks: parse_deezer_tracks(response._tracks.data),
-							albums: parse_deezer_albums(response._albums.data)
-						}
-					}
+
+					const data = get_response({ opts, total, next_page }, {
+						type: Type.DEEZER_SEARCH,
+						artists: parse_deezer_artists(response._artists.data),
+						tracks: parse_deezer_tracks(response._tracks.data),
+						albums: parse_deezer_albums(response._albums.data)
+					})
+
 					callback(false, data);
 				} else {
-					callback(true, null);
+					callback(true, get_response());
 				}
 			});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -80,17 +79,15 @@ export const artists = (opts, callback) => {
 				} else {
 					next_page = null;
 				}
-				const data = {
-					meta: { opts, total, next_page },
-					result: parse_deezer_artists(artist)
-				}
+
+				const data = get_response({ opts, total, next_page }, parse_deezer_artists(artist));
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -115,18 +112,14 @@ export const albums = (opts, callback) => {
 				} else {
 					next_page = null;
 				}
-				const data = {
-					meta: { opts, total, next_page },
-					result: parse_deezer_albums(album)
-				}
-				console.log(data);
+				const data = get_response({ opts, total, next_page }, parse_deezer_albums(album))
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -140,17 +133,15 @@ export const artist_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const artist_info = response._artist_info;
-				const data = {
-					meta: { opts },
-					result: parse_deezer_artist_info(artist_info)
-				}
+				const data = get_response({ opts }, parse_deezer_artist_info(artist_info));
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -165,17 +156,16 @@ export const album_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const album_info = response._album_info;
-				const data = {
-					meta: { opts },
-					result: parse_deezer_album_info(album_info)
-				}
+				const data = get_response({ opts }, parse_deezer_album_info(album_info));
+
+
 				callback(false, data);
 			} else {
-				callback(true, null);
+				callback(true, get_response());
 			}
 		});
 	} else {
-		callback(true, null);
+		callback(true, get_response());
 	}
 }
 
@@ -191,18 +181,17 @@ export const top_data = (opts, callback) => {
 		_top_data: x => make_request(url_top_data, x)
 	}, (error, response) => {
 		if (response) {
-			const data = {
-				meta: { opts },
-				result: {
-					type: Type.DEEZER_SEARCH,
-					tracks: parse_deezer_tracks(response._top_data.tracks.data),
-					albums: parse_deezer_albums(response._top_data.albums.data),
-					artists: parse_deezer_artists(response._top_data.artists.data)
-				}
-			}
+			const data = get_response({ opts }, {
+				type: Type.DEEZER_SEARCH,
+				tracks: parse_deezer_tracks(response._top_data.tracks.data),
+				albums: parse_deezer_albums(response._top_data.albums.data),
+				artists: parse_deezer_artists(response._top_data.artists.data)
+			});
+
+
 			callback(false, data);
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	});
 }
@@ -211,16 +200,15 @@ export const top_data = (opts, callback) => {
 export const artist_artwork = (opts, callback) => {
 	artists(opts, (e, s) => {
 		if (s) {
-			const data = {
-				meta: s.meta,
-				result: {
-					type: Type.DEEZER_IMAGE,
-					images: get_closest_image_match(opts.artist_name, s.result, 'name')
-				}
-			}
+			const data = get_response(s.meta, {
+				type: Type.DEEZER_IMAGE,
+				images: get_closest_image_match(opts.artist_name, s.result, 'name')
+			});
+
+
 			callback(false, data);
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	})
 }
@@ -228,16 +216,14 @@ export const artist_artwork = (opts, callback) => {
 export const album_artwork = (opts, callback) => {
 	albums(opts, (e, s) => {
 		if (s) {
-			const data = {
-				meta: s.meta,
-				result: {
-					type: Type.DEEZER_IMAGE,
-					images: get_closest_image_match(opts.album_name, s.result, 'name')
-				}
-			}
+			const data = get_response(s.meta, {
+				type: Type.DEEZER_IMAGE,
+				images: get_closest_image_match(opts.album_name, s.result, 'name')
+			});
+
 			callback(false, data);
 		} else {
-			callback(true, null);
+			callback(true, get_response());
 		}
 	})
 }
