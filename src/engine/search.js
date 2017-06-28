@@ -31,9 +31,9 @@ import {
 
 export const search = (opts, callback) => {
 	parallel({
-		search_deezer_parallel: x => deezer_search_all(opts, callback),
-		search_lastfm_parallel: x => lastfm_search_all(opts, callback),
-		search_youtube_parallel: x => youtube_new_tracks(opts, callback)
+		search_deezer_parallel: x => deezer_search_all(opts, x),
+		search_lastfm_parallel: x => lastfm_search_all(opts, x),
+		search_youtube_parallel: x => youtube_search_tracks(opts, x)
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -47,7 +47,7 @@ export const search = (opts, callback) => {
 
 export const search_albums = (opts, callback) => {
 	parallel({
-		album_deezer_parallel: x => deezer_search_albums(opts, callback),
+		album_deezer_parallel: x => deezer_search_albums(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -61,7 +61,7 @@ export const search_albums = (opts, callback) => {
 
 export const search_artists = (opts, callback) => {
 	parallel({
-		artist_deezer_parallel: x => deezer_search_artists(opts, callback),
+		artist_deezer_parallel: x => deezer_search_artists(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -75,8 +75,8 @@ export const search_artists = (opts, callback) => {
 
 export const artist_info = (opts, callback) => {
 	parallel({
-		artist_info_deezer_parallel: x => deezer_artist_info(opts, callback),
-		artist_info_lastfm_parallel: x => lastfm_artist_info(opts, callback)
+		artist_info_deezer_parallel: x => deezer_artist_info(opts, x),
+		artist_info_lastfm_parallel: x => lastfm_artist_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -90,8 +90,8 @@ export const artist_info = (opts, callback) => {
 
 export const album_info = (opts, callback) => {
 	parallel({
-		album_info_deezer_parallel: x => deezer_album_info(opts, callback),
-		album_info_lastfm_parallel: x => lastfm_album_info(opts, callback)
+		album_info_deezer_parallel: x => deezer_album_info(opts, x),
+		album_info_lastfm_parallel: x => lastfm_album_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -105,7 +105,7 @@ export const album_info = (opts, callback) => {
 
 export const artist_albums = (opts, callback) => {
 	parallel({
-		artist_albums_lastfm_parallel: x => lastfm_artist_albums(opts, callback),
+		artist_albums_lastfm_parallel: x => lastfm_artist_albums(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -119,7 +119,7 @@ export const artist_albums = (opts, callback) => {
 
 export const artist_tracks = (opts, callback) => {
 	parallel({
-		artist_tracks_lastfm_parallel: x => lastfm_artist_tracks(opts, callback),
+		artist_tracks_lastfm_parallel: x => lastfm_artist_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -133,7 +133,7 @@ export const artist_tracks = (opts, callback) => {
 
 export const top_data = (opts, callback) => {
 	parallel({
-		top_data_deezer_parallel: x => deezer_chart_data(opts, callback),
+		top_data_deezer_parallel: x => deezer_chart_data(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -147,8 +147,8 @@ export const top_data = (opts, callback) => {
 
 export const trending_data = (opts, callback) => {
 	parallel({
-		trending_artists_lastfm_parallel: x => lastfm_trending_artists(opts, callback),
-		trending_tracks_lastfm_parallel: x => lastfm_trending_tracks(opts, callback),
+		trending_artists_lastfm_parallel: x => lastfm_trending_artists(opts, x),
+		trending_tracks_lastfm_parallel: x => lastfm_trending_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -162,7 +162,7 @@ export const trending_data = (opts, callback) => {
 
 export const similar_data = (opts, callback) => {
 	parallel({
-		similar_videos_youtube_parallel: x => youtube_related_videos(opts, callback),
+		similar_videos_youtube_parallel: x => youtube_related_videos(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -176,7 +176,7 @@ export const similar_data = (opts, callback) => {
 
 export const new_data = (opts, callback) => {
 	parallel({
-		new_tracks_youtube_parallel: x => youtube_new_tracks(opts, callback),
+		new_tracks_youtube_parallel: x => youtube_new_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {
@@ -188,6 +188,6 @@ export const new_data = (opts, callback) => {
 	});
 }
 
-export const radio = (callback) => {
+export const radio = (opts, callback) => {
 	callback({ messages: radio_stations, error: false });
 }

@@ -27,7 +27,7 @@ import {
 
 
 app.listen(port, () => {
-
+	console.log(`Listening on ${port}`);
 });
 
 app.get('/', (req, res) => {
@@ -48,7 +48,7 @@ app.post('/search', (req, res) => {
 })
 
 app.post('/searchAlbums', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		search_albums(opts, (data) => {
 			res.json(data);
@@ -59,7 +59,7 @@ app.post('/searchAlbums', (req, res) => {
 })
 
 app.post('/searchArtists', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		search_artists(opts, (data) => {
 			res.json(data);
@@ -70,7 +70,7 @@ app.post('/searchArtists', (req, res) => {
 })
 
 app.post('/searchAlbum', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		album_info(opts, (data) => {
 			res.json(data);
@@ -81,7 +81,7 @@ app.post('/searchAlbum', (req, res) => {
 })
 
 app.post('/searchArtist', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		artist_info(opts, (data) => {
 			res.json(data);
@@ -92,7 +92,7 @@ app.post('/searchArtist', (req, res) => {
 })
 
 app.post('/searchArtistAlbums', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		artist_albums(opts, (data) => {
 			res.json(data);
@@ -103,7 +103,7 @@ app.post('/searchArtistAlbums', (req, res) => {
 })
 
 app.post('/searchArtistTracks', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		artist_tracks(opts, (data) => {
 			res.json(data);
@@ -114,7 +114,7 @@ app.post('/searchArtistTracks', (req, res) => {
 })
 
 app.post('/searchTopData', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		top_data(opts, (data) => {
 			res.json(data);
@@ -125,7 +125,7 @@ app.post('/searchTopData', (req, res) => {
 })
 
 app.post('/searchTrendingData', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		trending_data(opts, (data) => {
 			res.json(data);
@@ -136,7 +136,7 @@ app.post('/searchTrendingData', (req, res) => {
 })
 
 app.post('/searchSimilarData', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		similar_data(opts, (data) => {
 			res.json(data);
@@ -147,7 +147,7 @@ app.post('/searchSimilarData', (req, res) => {
 })
 
 app.post('/searchNewData', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		new_data(opts, (data) => {
 			res.json(data);
@@ -158,7 +158,7 @@ app.post('/searchNewData', (req, res) => {
 })
 
 app.post('/albumArtwork', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		album_artwork(opts, (data) => {
 			res.json(data);
@@ -169,7 +169,7 @@ app.post('/albumArtwork', (req, res) => {
 })
 
 app.post('/artistArtwork', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		artist_artwork(opts, (data) => {
 			res.json(data);
@@ -180,7 +180,7 @@ app.post('/artistArtwork', (req, res) => {
 })
 
 app.post('/trackArtwork', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		track_artwork(opts, (data) => {
 			res.json(data);
@@ -191,7 +191,7 @@ app.post('/trackArtwork', (req, res) => {
 })
 
 app.post('/searchLyrics', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		lyrics(opts, (data) => {
 			res.json(data);
@@ -202,7 +202,7 @@ app.post('/searchLyrics', (req, res) => {
 })
 
 app.post('/match', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
 		match(opts, (data) => {
 			res.json(data);
@@ -213,9 +213,9 @@ app.post('/match', (req, res) => {
 })
 
 app.post('/radio', (req, res) => {
-	const body = req.body;
+	const opts = req.body;
 	if (opts) {
-		radio((data) => {
+		radio(opts, (data) => {
 			res.json(data);
 		})
 	} else {

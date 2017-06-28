@@ -25,7 +25,7 @@ export const search = (opts, callback) => {
 
 		common = page ? common + YOUTUBE_NEXT_PAGE + page : common;
 
-		const url_track = YOUTUBER_SEARCH + common;
+		const url_track = YOUTUBE_SEARCH + common;
 		parallel({
 			_search_track: x => make_request(url_track, x),
 		},
