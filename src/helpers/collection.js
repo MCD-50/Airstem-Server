@@ -220,13 +220,13 @@ export const parse_youtube_match = (formats, id) => {
 		});
 }
 
-export const parse_soundcloud_tracks = (tracks, api_key) => {
+export const parse_soundcloud_tracks = (tracks, soundcloud_api_key) => {
 	return tracks
 		.map(x => {
 			return {
 				type: Type.SOUNDCLOUD_TRACK,
-				download_url: x.stream_url + '?client_id=' + api_key || null,
-				stream_url: x.stream_url + '?client_id=' + api_key || null,
+				download_url: x.stream_url + '?client_id=' + soundcloud_api_key || null,
+				stream_url: x.stream_url + '?client_id=' + soundcloud_api_key || null,
 				song_length: x.duration || null,
 				title: x.title || null,
 				bit_rate: null,

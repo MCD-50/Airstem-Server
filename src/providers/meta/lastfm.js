@@ -17,15 +17,15 @@ import {
 
 
 export const search = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const query = opts.query || null;
-	if (query && api_key) {
+	if (query && last_fm_api_key) {
 		const page = opts.page || 1;
 		const limit = opts.limit || 10;
 		const auto_correct = opts.auto_correct || 0;
 
 		const common = query + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_LIMIT + limit + LASTFM_PAGE + page + LASTFM_API + api_key;
+			LASTFM_LIMIT + limit + LASTFM_PAGE + page + LASTFM_API + last_fm_api_key;
 
 		const url_track = LASTFM_SEARCH_TRACK + common;
 		const url_artist = LASTFM_SEARCH_ARTIST + common;
@@ -72,12 +72,12 @@ export const search = (opts, callback) => {
 }
 
 export const artist_info = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
-	if (api_key && artist_name) {
+	if (last_fm_api_key && artist_name) {
 		const auto_correct = opts.auto_correct || 0;
 		const common = artist_name + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key;
+			LASTFM_API + last_fm_api_key;
 
 		const url_artist_info = LASTFM_ARTIST_INFO + common;
 
@@ -101,13 +101,13 @@ export const artist_info = (opts, callback) => {
 }
 
 export const album_info = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
 	const album_name = opts.album_name || null
-	if (api_key && artist_name && album_name) {
+	if (last_fm_api_key && artist_name && album_name) {
 		const auto_correct = opts.auto_correct || 0;
 		const common = album_name + '&artist=' + artist_name + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key;
+			LASTFM_API + last_fm_api_key;
 
 		const url_album_info = LASTFM_ALBUM_INFO + common;
 
@@ -130,17 +130,15 @@ export const album_info = (opts, callback) => {
 	}
 }
 
-
-
 export const track_info = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
 	const track_name = opts.track_name || null
-	if (api_key && artist_name && track_name) {
+	if (last_fm_api_key && artist_name && track_name) {
 
 		const auto_correct = opts.auto_correct || 0;
 		const common = track_name + '&artist=' + artist_name + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key;
+			LASTFM_API + last_fm_api_key;
 
 		const url_track_info = LASTFM_TRACK_INFO + common;
 
@@ -165,15 +163,15 @@ export const track_info = (opts, callback) => {
 
 
 export const artist_top_albums = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
-	if (api_key && artist_name) {
+	if (last_fm_api_key && artist_name) {
 
 		const auto_correct = opts.auto_correct || 0;
 		const limit = opts.limit || 10;
 
 		const common = artist_name + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key + LASTFM_LIMIT + limit;
+			LASTFM_API + last_fm_api_key + LASTFM_LIMIT + limit;
 
 		const url_artist_album = LASTFM_TOP_ARTIST_ALBUM + common;
 
@@ -201,15 +199,15 @@ export const artist_top_albums = (opts, callback) => {
 
 
 export const artist_top_tracks = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
-	if (api_key && artist_name) {
+	if (last_fm_api_key && artist_name) {
 
 		const auto_correct = opts.auto_correct || 0;
 		const limit = opts.limit || 10;
 
 		const common = artist_name + LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key + LASTFM_LIMIT + limit;
+			LASTFM_API + last_fm_api_key + LASTFM_LIMIT + limit;
 
 		const url_artist_track = LASTFM_TOP_ARTIST_TRACK + common;
 
@@ -236,14 +234,14 @@ export const artist_top_tracks = (opts, callback) => {
 
 
 export const trending_artist = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
-	if (api_key) {
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
+	if (last_fm_api_key) {
 
 		const auto_correct = opts.auto_correct || 0;
 		const limit = opts.limit || 10;
 
 		const common = LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key + LASTFM_LIMIT + limit;
+			LASTFM_API + last_fm_api_key + LASTFM_LIMIT + limit;
 
 		const url_trending_artist = LASTFM_TOP_ARTISTS + common;
 
@@ -270,14 +268,14 @@ export const trending_artist = (opts, callback) => {
 }
 
 export const trending_tracks = (opts, callback) => {
-	const api_key = opts.api_key || LASTFM_DEFAULT_API || null;
-	if (api_key) {
+	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
+	if (last_fm_api_key) {
 
 		const auto_correct = opts.auto_correct || 0;
 		const limit = opts.limit || 10;
 
 		const common = LASTFM_AUTOCORRECT + auto_correct + LASTFM_JSON_FORMAT +
-			LASTFM_API + api_key + LASTFM_LIMIT + limit;
+			LASTFM_API + last_fm_api_key + LASTFM_LIMIT + limit;
 
 		const url_trending_track = LASTFM_TOP_TRACKS + common;
 

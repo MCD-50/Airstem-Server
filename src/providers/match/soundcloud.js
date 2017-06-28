@@ -13,18 +13,18 @@ import { get_closest_track_match } from '../../helpers/util';
 export const match = (opts, callback) => {
 	const name = opts.name || null;
 	const artist_name = opts.artist_name || null;
-	const api_key = opts.api_key || SOUNDCLOUD_DEFAULT_KEY;
-	if ((name || artist_name) && api_key) {
+	const soundcloud_api_key = opts.soundcloud_api_key || SOUNDCLOUD_DEFAULT_KEY;
+	if ((name || artist_name) && soundcloud_api_key) {
 		const limit = opts.limit || 10;
 		const common = (name && artist_name) ? `${artist_name} ${name}`
 			: name ? name : artist_name;
 
-		const url_match = SOUNDCLOUD_API + api_key + SOUNDCLOUD_QUERY + common + SOUNDCLOUD_LIMIT + limit;
+		const url_match = SOUNDCLOUD_API + soundcloud_api_key + SOUNDCLOUD_QUERY + common + SOUNDCLOUD_LIMIT + limit;
 
 		request(url_match, (error, response) => {
 			if (response && response.body) {
 				const body = JSON.parse(response.body);
-				const items = parse_soundcloud_tracks(body.collection, api_key);
+				const items = parse_soundcloud_tracks(body.collection, soundcloud_api_key);
 				
 				is_online(items, res => {
 					const data = {

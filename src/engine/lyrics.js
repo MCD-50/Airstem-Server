@@ -8,13 +8,13 @@ import { Type } from '../helpers/type';
 import { parse_metro_lyrics } from '../helpers/collection';
 
 export const lyrics = (opts, callback) => {
-	const api_key = opts.api_key || METRO_LYRICS_DEFAULT_API || null;
+	const metro_api_key = opts.metro_api_key || METRO_LYRICS_DEFAULT_API || null;
 	const artist_name = opts.artist_name || null;
 	const track_name = opts.track_name || null
 
-	if (api_key && artist_name && track_name) {
+	if (metro_api_key && artist_name && track_name) {
 		const common = track_name + METRO_LYRICS_ARTIST + artist_name
-			+ METRO_LYRICS_API + api_key + METRO_LYRICS_JSON_FORMAT;
+			+ METRO_LYRICS_API + metro_api_key + METRO_LYRICS_JSON_FORMAT;
 
 		const url_lyrics = METRO_LYRICS_BASE + common;
 

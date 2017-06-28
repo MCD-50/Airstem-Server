@@ -14,7 +14,7 @@ import { get_closest_image_match } from '../../helpers/util';
 
 export const search = (opts, callback) => {
 	const query = opts.query || null;
-	if (query && api_key) {
+	if (query) {
 		const page = opts.page || 0;
 		const limit = opts.limit || 10;
 
