@@ -48,11 +48,11 @@ export const search = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -83,11 +83,11 @@ export const artists = (opts, callback) => {
 				const data = get_response({ opts, total, next_page }, parse_deezer_artists(artist));
 				callback(false, data);
 			} else {
-				callback(true, get_response());
+				callback(false, get_response());
 			}
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -115,11 +115,11 @@ export const albums = (opts, callback) => {
 				const data = get_response({ opts, total, next_page }, parse_deezer_albums(album))
 				callback(false, data);
 			} else {
-				callback(true, get_response());
+				callback(false, get_response());
 			}
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -137,11 +137,11 @@ export const artist_info = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(true, get_response());
+				callback(false, get_response());
 			}
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -161,11 +161,11 @@ export const album_info = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(true, get_response());
+				callback(false, get_response());
 			}
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -191,7 +191,7 @@ export const top_data = (opts, callback) => {
 
 			callback(false, data);
 		} else {
-			callback(true, get_response());
+			callback(false, get_response());
 		}
 	});
 }
@@ -208,7 +208,7 @@ export const artist_artwork = (opts, callback) => {
 
 			callback(false, data);
 		} else {
-			callback(true, get_response());
+			callback(false, get_response());
 		}
 	})
 }
@@ -223,7 +223,7 @@ export const album_artwork = (opts, callback) => {
 
 			callback(false, data);
 		} else {
-			callback(true, get_response());
+			callback(false, get_response());
 		}
 	})
 }

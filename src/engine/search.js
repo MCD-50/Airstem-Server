@@ -36,7 +36,7 @@ export const search = (opts, callback) => {
 		search_youtube_parallel: x => youtube_search_tracks(opts, x)
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -50,7 +50,7 @@ export const search_albums = (opts, callback) => {
 		album_deezer_parallel: x => deezer_search_albums(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -64,7 +64,7 @@ export const search_artists = (opts, callback) => {
 		artist_deezer_parallel: x => deezer_search_artists(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -79,7 +79,7 @@ export const artist_info = (opts, callback) => {
 		artist_info_lastfm_parallel: x => lastfm_artist_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -94,7 +94,7 @@ export const album_info = (opts, callback) => {
 		album_info_lastfm_parallel: x => lastfm_album_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -108,7 +108,7 @@ export const artist_albums = (opts, callback) => {
 		artist_albums_lastfm_parallel: x => lastfm_artist_albums(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -122,7 +122,7 @@ export const artist_tracks = (opts, callback) => {
 		artist_tracks_lastfm_parallel: x => lastfm_artist_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -136,7 +136,7 @@ export const top_data = (opts, callback) => {
 		top_data_deezer_parallel: x => deezer_chart_data(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -151,7 +151,7 @@ export const trending_data = (opts, callback) => {
 		trending_tracks_lastfm_parallel: x => lastfm_trending_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -165,7 +165,7 @@ export const similar_data = (opts, callback) => {
 		similar_videos_youtube_parallel: x => youtube_related_videos(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})
@@ -179,7 +179,7 @@ export const new_data = (opts, callback) => {
 		new_tracks_youtube_parallel: x => youtube_new_tracks(opts, x),
 	}, (err, res) => {
 		let messages = [];
-		if (!err && res) {
+		if (res) {
 			Object.keys(res).forEach(x => {
 				messages.push(res[x]);
 			})

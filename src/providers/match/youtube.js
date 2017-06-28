@@ -23,7 +23,7 @@ export const match = (opts, callback) => {
 			});
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -50,7 +50,7 @@ export const match_fast = (opts, callback) => {
 			callback(false, data);
 		});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 

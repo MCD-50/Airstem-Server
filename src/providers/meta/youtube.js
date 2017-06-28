@@ -40,11 +40,11 @@ export const search = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -75,11 +75,11 @@ export const track_info = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -114,11 +114,11 @@ export const search_related = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -148,11 +148,11 @@ export const new_tracks = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
 
@@ -183,10 +183,10 @@ export const track_artwork = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(true, get_response());
+					callback(false, get_response());
 				}
 			});
 	} else {
-		callback(true, get_response());
+		callback(false, get_response());
 	}
 }
