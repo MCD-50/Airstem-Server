@@ -73,11 +73,18 @@ export const artists = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const artist = response._artists.data;
+				const total = response._artists.total;
+				let next_page = page;
+				if (total && (page + 1) * limit < total) {
+					next_page += limit;
+				} else {
+					next_page = null;
+				}
 				const data = {
-					meta: { opts },
+					meta: { opts, total, next_page },
 					result: parse_deezer_artists(artist)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -94,20 +101,26 @@ export const albums = (opts, callback) => {
 		const limit = opts.limit || 10;
 
 		const common = album_name + DEEZER_LIMIT + limit + DEEZER_SEARCH_INDEX + page;
-
 		const url_album = DEEZER_SEARCH_ALBUM + common;
-
 
 		parallel({
 			_albums: x => make_request(url_album, x)
 		}, (error, response) => {
 			if (response) {
 				const album = response._albums.data;
+				const total = response._albums.total;
+				let next_page = page;
+				if (total && (page + 1) * limit < total) {
+					next_page += limit;
+				} else {
+					next_page = null;
+				}
 				const data = {
-					meta: { opts },
+					meta: { opts, total, next_page },
 					result: parse_deezer_albums(album)
 				}
-				callback(true, data);
+				console.log(data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -131,7 +144,7 @@ export const artist_info = (opts, callback) => {
 					meta: { opts },
 					result: parse_deezer_artist_info(artist_info)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -156,7 +169,7 @@ export const album_info = (opts, callback) => {
 					meta: { opts },
 					result: parse_deezer_album_info(album_info)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -187,7 +200,7 @@ export const top_data = (opts, callback) => {
 					artists: parse_deezer_artists(response._top_data.artists.data)
 				}
 			}
-			callback(true, data);
+			callback(false, data);
 		} else {
 			callback(true, null);
 		}

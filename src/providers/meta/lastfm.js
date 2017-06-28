@@ -90,7 +90,7 @@ export const artist_info = (opts, callback) => {
 					meta: { opts },
 					result: parse_lastfm_artist_info(artist)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -120,7 +120,7 @@ export const album_info = (opts, callback) => {
 					meta: { opts },
 					result: parse_lastfm_album_info(album)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -151,7 +151,7 @@ export const track_info = (opts, callback) => {
 					meta: { opts },
 					result: parse_lastfm_track_info(track)
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -186,7 +186,7 @@ export const artist_top_albums = (opts, callback) => {
 						albums: parse_lastm_albums(response._artist_albums.topalbums.album)
 					}
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -222,7 +222,7 @@ export const artist_top_tracks = (opts, callback) => {
 						tracks: parse_lastfm_tracks(response._artist_tracks.toptracks.track)
 					}
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -257,7 +257,7 @@ export const trending_artist = (opts, callback) => {
 						artists: parse_lastfm_artists(response._trending_artists.artists.artist)
 					}
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
@@ -290,7 +290,7 @@ export const trending_tracks = (opts, callback) => {
 						tracks: parse_lastfm_tracks(response._trending_tracks.tracks.track)
 					}
 				}
-				callback(true, data);
+				callback(false, data);
 			} else {
 				callback(true, null);
 			}
