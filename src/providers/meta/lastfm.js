@@ -71,11 +71,11 @@ export const search = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -99,11 +99,11 @@ export const artist_info = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -127,11 +127,11 @@ export const album_info = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -155,11 +155,11 @@ export const track_info = (opts, callback) => {
 				const data = get_response({ opts }, parse_lastfm_track_info(track))
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -189,11 +189,11 @@ export const artist_top_albums = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -223,11 +223,11 @@ export const artist_top_tracks = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -256,11 +256,11 @@ export const trending_artist = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -288,11 +288,11 @@ export const trending_tracks = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -308,7 +308,7 @@ export const artist_artwork = (opts, callback) => {
 
 			callback(false, data);
 		} else {
-			callback(false, get_response());
+			callback(false, get_response(opts));
 		}
 	})
 }
@@ -325,7 +325,7 @@ export const album_artwork = (opts, callback) => {
 
 			callback(false, data);
 		} else {
-			callback(false, get_response());
+			callback(false, get_response(opts));
 		}
 	})
 }

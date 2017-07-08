@@ -31,10 +31,10 @@ export const lyrics = (opts, callback) => {
 
 				callback(false, data);
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }

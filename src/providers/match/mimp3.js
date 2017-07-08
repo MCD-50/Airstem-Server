@@ -64,11 +64,11 @@ export const match = (opts, callback) => {
 				});
 
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 

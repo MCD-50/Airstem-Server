@@ -50,11 +50,11 @@ export const match = (opts, callback) => {
 					callback(false, data);
 				});
 			} else {
-				callback(false, get_response());
+				callback(false, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -97,7 +97,7 @@ export const radio = (opts, callback) => {
 				callback(false, data);
 			});
 		} else {
-			callback(false, get_response());
+			callback(false, get_response(opts));
 		}
 	});
 }

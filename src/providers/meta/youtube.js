@@ -24,7 +24,7 @@ export const search = (opts, callback) => {
 			YOUTUBE_ORDER + order + YOUTUBE_DEFAULTS;
 
 		common = page ? common + YOUTUBE_NEXT_PAGE + page : common;
-
+		console.log(page);
 		const url_track = YOUTUBE_SEARCH + common;
 		parallel({
 			_search_track: x => make_request(url_track, x),
@@ -40,11 +40,11 @@ export const search = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -75,11 +75,11 @@ export const track_info = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -114,11 +114,11 @@ export const search_related = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -148,11 +148,11 @@ export const new_tracks = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }
 
@@ -183,10 +183,10 @@ export const track_artwork = (opts, callback) => {
 
 					callback(false, data);
 				} else {
-					callback(false, get_response());
+					callback(false, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response());
+		callback(false, get_response(opts));
 	}
 }

@@ -10,6 +10,7 @@ const cors = require('cors');
 //app use
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
+
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(cors());
 
@@ -27,7 +28,7 @@ import {
 
 
 app.listen(port, () => {
-	//console.log(`Listening on ${port}`);
+	console.log(`Listening on ${port}`);
 });
 
 app.get('/', (req, res) => {
