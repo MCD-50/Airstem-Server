@@ -70,7 +70,7 @@ app.post('/searchArtists', (req, res) => {
 	}
 })
 
-app.post('/searchAlbum', (req, res) => {
+app.post('/albumInfo', (req, res) => {
 	const opts = req.body;
 	if (opts) {
 		album_info(opts, (data) => {
@@ -81,7 +81,7 @@ app.post('/searchAlbum', (req, res) => {
 	}
 })
 
-app.post('/searchArtist', (req, res) => {
+app.post('/artistInfo', (req, res) => {
 	const opts = req.body;
 	if (opts) {
 		artist_info(opts, (data) => {

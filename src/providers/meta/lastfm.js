@@ -124,7 +124,6 @@ export const album_info = (opts, callback) => {
 			if (response) {
 				const album = response._album_info.album;
 				const data = get_response({ opts }, parse_lastfm_album_info(album))
-
 				callback(false, data);
 			} else {
 				callback(false, get_response(opts));
@@ -183,7 +182,7 @@ export const artist_top_albums = (opts, callback) => {
 			if (response) {
 				const data = get_response({ opts }, {
 					type: Type.LASTFM_SEARCH,
-					albums: parse_lastm_albums(response._artist_albums.topalbums.album)
+					albums: parse_lastfm_albums(response._artist_albums.topalbums.album)
 				})
 
 

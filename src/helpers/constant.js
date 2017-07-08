@@ -34,8 +34,8 @@ export const DEEZER_SEARCH_ARTIST = SEARCH_BASE + '/artist' + '?q=';
 export const DEEZER_SEARCH_ALBUM = SEARCH_BASE + '/album' + '?q=';
 export const DEEZER_CHART = DEEZER_BASE + 'chart/'
 export const DEEZER_SEARCH_INDEX = '&index=';
-export const DEEZER_ALBUM_INFO = DEEZER_BASE + '/album/';
-export const DEEZER_ARTIST_INFO = DEEZER_BASE + '/artist/';
+export const DEEZER_ALBUM_INFO = DEEZER_BASE + 'album/';
+export const DEEZER_ARTIST_INFO = DEEZER_BASE + 'artist/';
 export const DEEZER_ARTIST_TOP_TRACKS_INDEX = '?index=';
 export const DEEZER_LIMIT = '&limit=';
 
