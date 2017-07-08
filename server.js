@@ -27,7 +27,7 @@ import {
 
 
 app.listen(port, () => {
-	console.log(`Listening on ${port}`);
+	//console.log(`Listening on ${port}`);
 });
 
 app.get('/', (req, res) => {

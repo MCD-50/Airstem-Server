@@ -31,19 +31,20 @@ export const search = (opts, callback) => {
 		},
 			(error, response) => {
 				if (response) {
-					const total = response._artists.total;
-					let next_page = page;
-					if (total && (page + 1) * limit < total) {
-						next_page += limit;
-					} else {
-						next_page = null;
-					}
+					const artist_total = response._artists.total || 0;
+					const artist_next_page = (page + 1) * limit < artist_total ? page + limit : null;
 
-					const data = get_response({ opts, total, next_page }, {
+					const album_total = response._albums.total || 0;
+					const album_next_page = (page + 1) * limit < album_total ? page + limit : null;
+
+					const track_total = response._tracks.total || 0;
+					const track_next_page = (page + 1) * limit < track_total ? page + limit : null;
+
+					const data = get_response({ opts }, {
 						type: Type.DEEZER_SEARCH,
-						artists: parse_deezer_artists(response._artists.data),
-						tracks: parse_deezer_tracks(response._tracks.data),
-						albums: parse_deezer_albums(response._albums.data)
+						artists: { meta: { artist_total, artist_next_page }, result: parse_deezer_artists(response._artists.data) },
+						tracks: { meta: { track_total, track_next_page }, result: parse_deezer_tracks(response._tracks.data) },
+						albums: { meta: { album_total, album_next_page }, result: parse_deezer_albums(response._albums.data) }
 					})
 
 					callback(false, data);
