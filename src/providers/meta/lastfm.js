@@ -41,24 +41,32 @@ export const search = (opts, callback) => {
 			(error, response) => {
 
 				if (response) {
-					const total = Math.max(response._tracks.results['opensearch:totalResults'],
-						response._artists.results['opensearch:totalResults'],
-						response._albums.results['opensearch:totalResults'])
+					
+					const artist_total = response._artists.results['opensearch:totalResults'] || 0;
+					const artist_next_page = (page + 1) * limit < artist_total ? page + 1 : null;
 
-					let next_page = page;
-					if (total && (page * limit) < total) {
-						next_page += 1;
-					} else {
-						next_page = null;
-					}
+					const album_total = response._albums.results['opensearch:totalResults'] || 0;
+					const album_next_page = (page + 1) * limit < album_total ? page + 1 : null;
 
-					const data = get_response({ opts, total, next_page }, {
+					const track_total = response._tracks.results['opensearch:totalResults'] || 0;
+					const track_next_page = (page + 1) * limit < track_total ? page + 1 : null;
+
+					const data = get_response({ opts }, {
 						type: Type.LASTFM_SEARCH,
-						artists: parse_lastfm_artists(response._artists.results.artistmatches.artist)
-							.sort((a, b) => (b.listeners) - (a.listeners)),
-						tracks: parse_lastfm_tracks(response._tracks.results.trackmatches.track)
-							.sort((a, b) => (b.listeners) - (a.listeners)),
-						albums: parse_lastfm_albums(response._albums.results.albummatches.album)
+						artists: {
+							meta: { artist_total, artist_next_page },
+							result: parse_lastfm_artists(response._artists.results.artistmatches.artist)
+								.sort((a, b) => (b.listeners) - (a.listeners))
+						},
+						tracks: {
+							meta: { track_total, track_next_page },
+							result: parse_lastfm_tracks(response._tracks.results.trackmatches.track)
+								.sort((a, b) => (b.listeners) - (a.listeners))
+						},
+						albums: {
+							meta: { album_total, album_next_page },
+							result: parse_lastfm_albums(response._albums.results.albummatches.album)
+						}
 					})
 
 					callback(false, data);
