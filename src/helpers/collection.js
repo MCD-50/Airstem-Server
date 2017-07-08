@@ -149,7 +149,7 @@ export const parse_deezer_tracks = (tracks) => {
 				type: Type.DEEZER_TRACK,
 				name: track.title,
 				artist_name: track.artist.name || null,
-				album_name: track.album && track.album.name || null,
+				album_name: track.album && track.album.name || track.album.title || null,
 				id: track.id,
 				images: track.album ? parse_deezer_images(track.album, 'cover')
 					: parse_deezer_images(track.artist, 'picture') || [] // optional
@@ -162,7 +162,7 @@ export const parse_deezer_artist_info = (artist, tracks = []) => {
 		type: Type.DEEZER_ARTIST,
 		name: artist.name,
 		id: artist.id || null,
-		tracklist_url: tracks,
+		tracks: tracks,
 		images: parse_deezer_images(artist, 'picture') // optional
 	}
 }
