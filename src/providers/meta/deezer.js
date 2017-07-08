@@ -15,7 +15,7 @@ import { get_closest_image_match, get_response } from '../../helpers/util';
 export const search = (opts, callback) => {
 	const query = opts.query || null;
 	if (query) {
-		const page = opts.page || 0;
+		const page = opts.deezer_page || 0;
 		const limit = opts.limit || 10;
 
 		const common = query + DEEZER_LIMIT + limit + DEEZER_SEARCH_INDEX + page;

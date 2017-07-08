@@ -22,7 +22,7 @@ export const search = (opts, callback) => {
 	const last_fm_api_key = opts.last_fm_api_key || LASTFM_DEFAULT_API || null;
 	const query = opts.query || null;
 	if (query && last_fm_api_key) {
-		const page = opts.page || 1;
+		const page = opts.last_fm_page || 1;
 		const limit = opts.limit || 10;
 		const auto_correct = opts.auto_correct || 0;
 

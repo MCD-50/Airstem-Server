@@ -18,7 +18,7 @@ export const search = (opts, callback) => {
 		const limit = opts.limit || 20;
 		const order = opts.order || Type.YOUTUBE_ORDER_TYPE.RELEVENCE;
 		const part = opts.part || Type.YOUTUBE_PART_TYPE.SNIPPET;
-		const page = opts.next_page || null;
+		const page = opts.youtube_page || null;
 
 		let common = query + YOUTUBE_PART + part + YOUTUBE_API + youtube_api_key + YOUTUBE_MAX_RESULT + limit +
 			YOUTUBE_ORDER + order + YOUTUBE_DEFAULTS;
