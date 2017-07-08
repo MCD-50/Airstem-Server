@@ -157,12 +157,12 @@ export const parse_deezer_tracks = (tracks) => {
 		})
 }
 
-export const parse_deezer_artist_info = (artist) => {
+export const parse_deezer_artist_info = (artist, tracks = []) => {
 	return {
 		type: Type.DEEZER_ARTIST,
 		name: artist.name,
 		id: artist.id || null,
-		tracklist_url: artist.tracklist,
+		tracklist_url: tracks,
 		images: parse_deezer_images(artist, 'picture') // optional
 	}
 }

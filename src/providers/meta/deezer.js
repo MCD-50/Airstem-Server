@@ -134,9 +134,10 @@ export const artist_info = (opts, callback) => {
 		}, (error, response) => {
 			if (response) {
 				const artist_info = response._artist_info;
-				const data = get_response({ opts }, parse_deezer_artist_info(artist_info));
-
-				callback(false, data);
+				get_artist_tracks(artist_info.tracklist, (tracks) => {
+					const data = get_response({ opts }, parse_deezer_artist_info(artist_info, tracks));
+					callback(false, data);
+				})
 			} else {
 				callback(false, get_response(opts));
 			}
@@ -144,6 +145,19 @@ export const artist_info = (opts, callback) => {
 	} else {
 		callback(false, get_response(opts));
 	}
+}
+
+const get_artist_tracks = (url, callback) => {
+	parallel({
+		_tracks: x => make_request(url, x),
+	}, (error, response) => {
+		if (response) {
+			const tracks = parse_deezer_tracks(response._tracks.data || []);
+			callback(tracks);
+		} else {
+			callback([]);
+		}
+	});
 }
 
 
@@ -169,7 +183,6 @@ export const album_info = (opts, callback) => {
 		callback(false, get_response(opts));
 	}
 }
-
 
 export const top_data = (opts, callback) => {
 	const limit = opts.limit || 10;
