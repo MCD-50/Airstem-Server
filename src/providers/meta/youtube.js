@@ -34,7 +34,18 @@ export const search = (opts, callback) => {
 					const search = response._search_track;
 					const data = get_response({ opts, next_page: search.nextPageToken }, {
 						type: Type.YOUTUBE_SEARCH,
-						tracks: parse_youtube_tracks(search.items)
+						tracks: {
+							meta: null,
+							result: parse_youtube_tracks(search.items)
+						},
+						artists: {
+							meta: null,
+							result: []
+						},
+						albums: {
+							meta: null,
+							result: []
+						}
 					})
 					callback(false, data);
 				} else {
