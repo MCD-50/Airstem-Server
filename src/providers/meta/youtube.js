@@ -24,7 +24,7 @@ export const search = (opts, callback) => {
 			YOUTUBE_ORDER + order + YOUTUBE_DEFAULTS;
 
 		common = page ? common + YOUTUBE_NEXT_PAGE + page : common;
-		console.log(page);
+
 		const url_track = YOUTUBE_SEARCH + common;
 		parallel({
 			_search_track: x => make_request(url_track, x),
@@ -36,8 +36,6 @@ export const search = (opts, callback) => {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: parse_youtube_tracks(search.items)
 					})
-
-
 					callback(false, data);
 				} else {
 					callback(false, get_response(opts));
@@ -87,7 +85,17 @@ export const track_info = (opts, callback) => {
 export const search_related = (opts, callback) => {
 	const youtube_api_key = opts.youtube_api_key || YOUTUBE_DEFAULT_API_KEY || null;
 	const related_video_id = opts.related_video_id || null;
-	if (related_video_id && youtube_api_key) {
+	const track_name = opts.track_name || null;
+	const artist_name = opts.artist_name || null;
+
+	if (related_video_id == null && track_name != null && artist_name != null) {
+		search({
+			query: track_name + " " + artist_name,
+			youtube_api_key: youtube_api_key
+		}, (error, data) => {
+			callback(error, data);
+		})
+	} else if (related_video_id && youtube_api_key) {
 		const limit = opts.limit || 20;
 		const order = opts.order || Type.YOUTUBE_ORDER_TYPE.RELEVENCE;
 		const part = opts.part || Type.YOUTUBE_PART_TYPE.SNIPPET;
@@ -110,8 +118,6 @@ export const search_related = (opts, callback) => {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: parse_youtube_tracks(search.items)
 					})
-
-
 					callback(false, data);
 				} else {
 					callback(false, get_response(opts));

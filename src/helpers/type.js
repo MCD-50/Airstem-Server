@@ -1,26 +1,27 @@
 export const Type = {
-	LASTFM_TRACK: 'lastfm_track',
-	LASTFM_ALBUM: 'lastfm_album',
-	LASTFM_ARTIST: 'lastfm_artist',
-	LASTFM_SIMILAR_ARTIST: 'lastfm_similar_artist',
-	LASTFM_SIMILAR_TRACK: 'lastfm_similar_track',
-	LASTFM_SEARCH: 'lastfm_search',
-	LASTFM_IMAGE: 'lastfm_image',
+	LASTFM_TRACK: 'LASTFM_TRACK',
+	LASTFM_ALBUM: 'LASTFM_ALBUM',
+	LASTFM_ARTIST: 'LASTFM_ARTIST',
+	LASTFM_SIMILAR_ARTIST: 'LASTFM_SIMILAR_ARTIST',
+	LASTFM_SIMILAR_TRACK: 'LASTFM_SIMILAR_TRACK',
+	LASTFM_SEARCH: 'LASTFM_SEARCH',
+	LASTFM_IMAGE: 'LASTFM_IMAGE',
 
 
-	DEEZER_SEARCH: 'deezer_search',
-	DEEZER_TRACK: 'deezer_track',
-	DEEZER_ALBUM: 'deezer_album',
-	DEEZER_ARTIST: 'deezer_artist',
-	DEEZER_IMAGE: 'deezer_image',
+	DEEZER_SEARCH: 'DEEZER_SEARCH',
+	DEEZER_TRACK: 'DEEZER_TRACK',
+	DEEZER_ALBUM: 'DEEZER_ALBUM',
+	DEEZER_ARTIST: 'DEEZER_ARTIST',
+	DEEZER_IMAGE: 'DEEZER_IMAGE',
 
-	METRO_LYRICS: 'metro_lyrics',
+	METRO_LYRICS: 'METRO_LYRICS',
 
-	YOUTUBE_SEARCH: 'youtube_search',
-	YOUTUBE_MATCH: 'youtube_match',
-	YOUTUBE_TRACK: 'youtube_track',
-	YOUTUBE_VIDEO: 'youtube_video',
-	YOUTUBE_IMAGE: 'youtube_image',
+	YOUTUBE_SEARCH: 'YOUTUBE_SEARCH',
+	YOUTUBE_MATCH: 'YOUTUBE_MATCH',
+	YOUTUBE_TRACK: 'YOUTUBE_TRACK',
+	YOUTUBE_VIDEO: 'YOUTUBE_VIDEO',
+	YOUTUBE_IMAGE: 'YOUTUBE_IMAGE',
+	
 	YOUTUBE_ORDER_TYPE: {
 		DATE: 'date',
 		RATING: 'rating',
@@ -29,15 +30,17 @@ export const Type = {
 		VIDEO_COUNT: 'videoCount',
 		VIEW_COUNT: 'viewCount'
 	},
+	
 	YOUTUBE_PART_TYPE: {
 		SNIPPET: 'snippet',
 		CONTENT_DETAILS: 'contentDetails',
 		STATISTICS: 'statistics'
 	},
 
-	MP3PM_MATCH: 'mp3pm_match',
-	MP3PM_TRACK: 'mp3pm_track',
-	MP3PM_RADIO: 'mp3pm_radio',
+	MP3PM_MATCH: 'MP3PM_MATCH',
+	MP3PM_TRACK: 'MP3PM_TRACK',
+	MP3PM_RADIO: 'MP3PM_RADIO',
+
 	MP3PM_RADIO_TYPE: {
 		POP: 'pop',
 		WORLD: 'world',
@@ -45,17 +48,17 @@ export const Type = {
 		ROCK: 'rock'
 	},
 
-	PLEER_MATCH: 'pleer_match',
-	PLEER_TRACK: 'pleer_track',
+	PLEER_MATCH: 'PLEER_MATCH',
+	PLEER_TRACK: 'PLEER_TRACK',
 
-	MIMP3_MATCH: 'mimp3_match',
-	MIMP3_TRACK: 'mimp3_track',
+	MIMP3_MATCH: 'MIMP3_MATCH',
+	MIMP3_TRACK: 'MIMP3_TRACK',
 
-	MP3COLD_MATCH: 'mp3cold_match',
-	MP3COLD_TRACK: 'mp3cold_track',
+	MP3COLD_MATCH: 'MP3COLD_MATCH',
+	MP3COLD_TRACK: 'MP3COLD_TRACK',
 
-	SOUNDCLOUD_MATCH: 'soundcloud_match',
-	SOUNDCLOUD_TRACK: 'soundcloud_track',
+	SOUNDCLOUD_MATCH: 'SOUNDCLOUD_MATCH',
+	SOUNDCLOUD_TRACK: 'SOUNDCLOUD_TRACK',
 
-	AISTEM_RADIO:'airstem_radio'
+	AISTEM_RADIO:'AISTEM_RADIO'
 }

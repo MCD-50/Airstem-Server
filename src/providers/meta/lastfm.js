@@ -41,7 +41,7 @@ export const search = (opts, callback) => {
 			(error, response) => {
 
 				if (response) {
-					
+
 					const artist_total = response._artists.results['opensearch:totalResults'] || 0;
 					const artist_next_page = (page + 1) * limit < artist_total ? page + 1 : null;
 

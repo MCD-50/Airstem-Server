@@ -18,7 +18,6 @@ export const match = (opts, callback) => {
 					type: Type.YOUTUBE_MATCH,
 					match: res1
 				})
-
 				callback(false, data);
 			});
 		});
@@ -26,6 +25,7 @@ export const match = (opts, callback) => {
 		callback(false, get_response(opts));
 	}
 }
+
 
 export const match_fast = (opts, callback) => {
 	let video_ids = opts.video_ids;
