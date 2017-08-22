@@ -32,6 +32,7 @@ export const search = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._search_track;
+					
 					const data = get_response({ opts, next_page: search.nextPageToken }, {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: {
@@ -104,20 +105,20 @@ export const search_related = (opts, callback) => {
 			query: track_name + " " + artist_name,
 			youtube_api_key: youtube_api_key
 		}, (error, data) => {
-			if(data && data.message && data.message.length > 0){
-				const item = data.message[0];
-				const result = item.result || null;
-				if(result && result.length > 0){
-					const _opts = {
-						youtube_api_key: youtube_api_key,
-						related_video_id: result[0].id
-					};
-					return search_related(_opts, callback)
-				}else{
-					callback(error, ['Jai']);
-				}
+			if(data && data.result 
+				&& data.result.tracks 
+				&& data.result.tracks.result 
+				&& data.result.tracks.result.length > 0){
+
+				const result = data.result.tracks.result[0];
+				const _opts = {
+					youtube_api_key: youtube_api_key,
+					related_video_id: result.id
+				};
+
+				search_related(_opts, callback);
 			}else{
-				callback(error, ['jaijai']);
+				callback(false, get_response(opts));
 			}
 		})
 	} else if (related_video_id && youtube_api_key) {
@@ -125,6 +126,7 @@ export const search_related = (opts, callback) => {
 		const order = opts.order || Type.YOUTUBE_ORDER_TYPE.RELEVENCE;
 		const part = opts.part || Type.YOUTUBE_PART_TYPE.SNIPPET;
 		const page = opts.next_page || null;
+
 
 		let common = related_video_id + YOUTUBE_PART + part + YOUTUBE_API + youtube_api_key + YOUTUBE_MAX_RESULT + limit +
 			YOUTUBE_ORDER + order + YOUTUBE_DEFAULTS;
@@ -139,7 +141,7 @@ export const search_related = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._related_tracks;
-					const data = get_response({ opts, next_page: search.nextPageToken }, {
+					const data = get_response({ opts, next_page: search.nextPageToken || null }, {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: parse_youtube_tracks(search.items)
 					})
