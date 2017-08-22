@@ -114,10 +114,10 @@ export const search_related = (opts, callback) => {
 					};
 					return search_related(_opts, callback)
 				}else{
-					callback(error, data);
+					callback(error, ['Jai']);
 				}
 			}else{
-				callback(error, data);
+				callback(error, ['jaijai']);
 			}
 		})
 	} else if (related_video_id && youtube_api_key) {
