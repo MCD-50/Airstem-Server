@@ -104,6 +104,17 @@ export const search_related = (opts, callback) => {
 			query: track_name + " " + artist_name,
 			youtube_api_key: youtube_api_key
 		}, (error, data) => {
+			if(data && data.message && data.message.length > 0){
+				const item = data.message[0];
+				const result = item.result || null;
+				if(result && result.length > 0){
+					const _opts = {
+						youtube_api_key: youtube_api_key,
+						related_video_id: result[0].id
+					};
+					return search_related(opts, callback)
+				}
+			}
 			callback(error, data);
 		})
 	} else if (related_video_id && youtube_api_key) {
