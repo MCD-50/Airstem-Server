@@ -93,12 +93,12 @@ export const artists = (opts, callback) => {
 }
 
 export const albums = (opts, callback) => {
-	const album_name = opts.album_name || null;
-	if (album_name) {
+	const artist_name = opts.artist_name || null;
+	if (artist_name) {
 		const page = opts.page || 0;
 		const limit = opts.limit || 10;
 
-		const common = album_name + DEEZER_LIMIT + limit + DEEZER_SEARCH_INDEX + page;
+		const common = artist_name + DEEZER_LIMIT + limit + DEEZER_SEARCH_INDEX + page;
 		const url_album = DEEZER_SEARCH_ALBUM + common;
 
 		parallel({
