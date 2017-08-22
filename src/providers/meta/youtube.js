@@ -113,9 +113,12 @@ export const search_related = (opts, callback) => {
 						related_video_id: result[0].id
 					};
 					return search_related(_opts, callback)
+				}else{
+					callback(error, data);
 				}
+			}else{
+				callback(error, data);
 			}
-			callback(error, data);
 		})
 	} else if (related_video_id && youtube_api_key) {
 		const limit = opts.limit || 20;
