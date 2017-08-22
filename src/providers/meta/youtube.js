@@ -112,7 +112,7 @@ export const search_related = (opts, callback) => {
 						youtube_api_key: youtube_api_key,
 						related_video_id: result[0].id
 					};
-					return search_related(opts, callback)
+					return search_related(_opts, callback)
 				}
 			}
 			callback(error, data);
