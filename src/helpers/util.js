@@ -1,6 +1,6 @@
 import didYouMean from 'didyoumean';
 
-export const get_response = (meta = {}, result = {}) => {
+export const get_response = (meta = {}, result = []) => {
 	return {
 		meta: meta,
 		result: result

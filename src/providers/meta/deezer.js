@@ -218,8 +218,7 @@ export const artist_artwork = (opts, callback) => {
 				type: Type.DEEZER_IMAGE,
 				images: get_closest_image_match(opts.artist_name, s.result, 'name')
 			});
-
-
+			
 			callback(false, data);
 		} else {
 			callback(false, get_response(opts));

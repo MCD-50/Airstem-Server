@@ -60,13 +60,40 @@ const radio_stations = [
 		url: ['http://radio.dj-gaurav.com:8035/'],
 		max_user: 1000,
 		genre: ['Hindi', 'Mix']
+	}, {
+		full_name: 'EDM UK',
+		title: 'One Mix',
+		country: 'UK',
+		url: ['http://fr5.1mix.co.uk:8022/'],
+		max_user: 100,
+		genre: ['Mix', 'Dance', 'EDM']
+	}, {
+		full_name: 'The Mix Radio Network',
+		title: 'The Mix Radio Network',
+		country: 'USA',
+		url: ['http://listen.djcmedia.com/clubremixxhigh'],
+		max_user: 0,
+		genre: ['Mix', 'Dance', 'EDM']
+	}, {
+		full_name: 'Energy FM Australia',
+		title: 'Energy FM Australia',
+		country: 'Australia',
+		url: ['http://s3.viastreaming.net:8502/'],
+		max_user: 200,
+		genre: ['Dance']
 	}
 ];
 
-export const get_radio_stations = (opts) => {
-
-	return get_response({ opts }, {
-			type: Type.AISTEM_RADIO,
-			radio: radio_stations
-		});
+export const radio_search = (opts, callback) => {
+	if (opts && opts.query) {
+		callback(false, get_response({ opts }, {
+			type: Type.AIRSTEM_RADIO,
+			radios: {
+				meta: null,
+				result: radio_stations
+			}
+		}))
+	} else {
+		callback(true, get_response(opts));
+	}
 }

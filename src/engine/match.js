@@ -16,7 +16,6 @@ export const match = (opts, callback) => {
 		pleer_parallel: x1 => pleer_match(opts, x1),
 		youtube_parallel: y1 => youtube_match(opts, y1),
 		soundcloud_parallel: z1 => soundcloud_match(opts, z1),
-		youtube_fast: x2 => match_fast(opts, x2),
 	}, (err, res) => {
 		let messages = [];
 		if (!err && res) {

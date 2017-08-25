@@ -21,9 +21,10 @@ import { match } from './src/engine/match';
 
 import {
 	search, search_albums, search_artists,
-	artist_info, album_info, artist_albums,
-	artist_tracks, top_data, trending_data,
-	similar_data, new_data, radio
+	artist_info_deezer, album_info_deezer,
+	artist_info_last, album_info_last,
+	artist_albums, artist_tracks, radio,
+	top_data, trending_data, similar_data, new_data,
 } from './src/engine/search'
 
 
@@ -70,10 +71,10 @@ app.post('/searchArtists', (req, res) => {
 	}
 })
 
-app.post('/albumInfo', (req, res) => {
+app.post('/albumInfoDeezer', (req, res) => {
 	const opts = req.body;
 	if (opts) {
-		album_info(opts, (data) => {
+		album_info_deezer(opts, (data) => {
 			res.json(data);
 		})
 	} else {
@@ -81,10 +82,32 @@ app.post('/albumInfo', (req, res) => {
 	}
 })
 
-app.post('/artistInfo', (req, res) => {
+app.post('/artistInfoDeezer', (req, res) => {
 	const opts = req.body;
 	if (opts) {
-		artist_info(opts, (data) => {
+		artist_info_deezer(opts, (data) => {
+			res.json(data);
+		})
+	} else {
+		res.json({ messages: [], error: true });
+	}
+})
+
+app.post('/albumInfoLastFm', (req, res) => {
+	const opts = req.body;
+	if (opts) {
+		album_info_last(opts, (data) => {
+			res.json(data);
+		})
+	} else {
+		res.json({ messages: [], error: true });
+	}
+})
+
+app.post('/artistInfoLastFm', (req, res) => {
+	const opts = req.body;
+	if (opts) {
+		artist_info_last(opts, (data) => {
 			res.json(data);
 		})
 	} else {
@@ -163,7 +186,7 @@ app.post('/albumArtwork', (req, res) => {
 	if (opts) {
 		album_artwork(opts, (data) => {
 			res.json(data);
-		})
+		});
 	} else {
 		res.json({ messages: [], error: true });
 	}
@@ -174,7 +197,7 @@ app.post('/artistArtwork', (req, res) => {
 	if (opts) {
 		artist_artwork(opts, (data) => {
 			res.json(data);
-		})
+		});
 	} else {
 		res.json({ messages: [], error: true });
 	}
@@ -185,7 +208,7 @@ app.post('/trackArtwork', (req, res) => {
 	if (opts) {
 		track_artwork(opts, (data) => {
 			res.json(data);
-		})
+		});
 	} else {
 		res.json({ messages: [], error: true });
 	}
@@ -196,7 +219,7 @@ app.post('/searchLyrics', (req, res) => {
 	if (opts) {
 		lyrics(opts, (data) => {
 			res.json(data);
-		})
+		});
 	} else {
 		res.json({ messages: [], error: true });
 	}
@@ -206,17 +229,6 @@ app.post('/match', (req, res) => {
 	const opts = req.body;
 	if (opts) {
 		match(opts, (data) => {
-			res.json(data);
-		})
-	} else {
-		res.json({ messages: [], error: true });
-	}
-})
-
-app.post('/radio', (req, res) => {
-	const opts = req.body;
-	if (opts) {
-		radio(opts, (data) => {
 			res.json(data);
 		})
 	} else {

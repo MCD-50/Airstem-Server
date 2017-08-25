@@ -6,13 +6,20 @@ import { track_artwork as y_track_artwork } from '../providers/meta/youtube';
 export const artist_artwork = (opts, callback) => {
 	//while getting from deezer artist_name is required
 	d_artist_artwork(opts, (error, response) => {
+		let messages = [];
 		if (error || (response && response.result && response.result.images.length < 1)) {
 			//while getting from lastfm artist_name & api_key is required
-			l_artist_artwork(opts, (err, res) => {
-				callback(err, res);
+			l_artist_artwork(opts, (error, response) => {
+				if (response) {
+					messages.push(response);
+				}
+				callback({ messages: messages, error: error });
 			});
 		} else {
-			callback(error, response)
+			if (response) {
+				messages.push(response);
+			}
+			callback({ messages: messages, error: error });
 		}
 	});
 }
@@ -20,19 +27,30 @@ export const artist_artwork = (opts, callback) => {
 export const album_artwork = (opts, callback) => {
 	//while getting from deezer album_name is required
 	d_album_artwork(opts, (error, response) => {
+		let messages = [];
 		if (error || (response && response.result && response.result.images.length < 1)) {
 			//while getting from lastfm artist_name, album_name & api_key is required
 			l_album_artwork(opts, (err, res) => {
-				callback(err, res);
+				if (response) {
+					messages.push(response);
+				}
+				callback({ messages: messages, error: error });
 			});
 		} else {
-			callback(error, response)
+			if (response) {
+				messages.push(response);
+			}
+			callback({ messages: messages, error: error });
 		}
 	});
 }
 
 export const track_artwork = (opts, callback) => {
+	let messages = [];
 	y_track_artwork(opts, (error, response) => {
-		callback(error, response);
+		if (response) {
+			messages.push(response);
+		}
+		callback({ messages: messages, error: error });
 	})
 }

@@ -6,11 +6,13 @@ import { Type } from '../../helpers/type';
 import {
 	parse_youtube_match
 } from '../../helpers/collection';
+import { search } from '../meta/youtube'
 import { is_online } from '../../helpers/internet';
 import { get_closest_track_match, get_response } from '../../helpers/util';
 
+
 export const match = (opts, callback) => {
-	const video_ids = opts.video_ids;
+	const video_ids = opts.video_ids || [];
 	if (video_ids && video_ids.length > 0) {
 		get_url(video_ids, res => {
 			is_online(res, res1 => {
@@ -20,6 +22,15 @@ export const match = (opts, callback) => {
 				})
 				callback(false, data);
 			});
+		});
+	} else if (opts.artist_name && opts.name) {
+		search({ query: opts.artist_name + '-' + opts.name }, (error, data) => {
+			if (data && data.result && data.result.tracks && data.result.tracks.result && data.result.tracks.result.length > 0) {
+				const item = data.result.tracks.result[0];
+				match({ video_ids: [item.id] }, callback);
+			} else {
+				callback(false, get_response(opts));
+			}
 		});
 	} else {
 		callback(false, get_response(opts));

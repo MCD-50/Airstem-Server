@@ -26,14 +26,15 @@ import {
 } from '../providers/meta/youtube';
 
 import {
-	radio_stations
+	radio_search
 } from '../providers/radio/station';
 
 export const search = (opts, callback) => {
 	parallel({
 		search_deezer_parallel: x => deezer_search_all(opts, x),
-		search_lastfm_parallel: x => lastfm_search_all(opts, x),
-		search_youtube_parallel: x => youtube_search_tracks(opts, x)
+		//search_lastfm_parallel: x => lastfm_search_all(opts, x),
+		search_youtube_parallel: x => youtube_search_tracks(opts, x),
+		search_radio_parallel: x => radio_search(opts, x)
 	}, (err, res) => {
 		let messages = [];
 		if (res) {
@@ -73,9 +74,36 @@ export const search_artists = (opts, callback) => {
 	});
 }
 
-export const artist_info = (opts, callback) => {
+export const artist_info_deezer = (opts, callback) => {
 	parallel({
 		artist_info_deezer_parallel: x => deezer_artist_info(opts, x),
+	}, (err, res) => {
+		let messages = [];
+		if (res) {
+			Object.keys(res).forEach(x => {
+				messages.push(res[x]);
+			})
+		}
+		callback({ messages: messages, error: err });
+	});
+}
+
+export const album_info_deezer = (opts, callback) => {
+	parallel({
+		album_info_deezer_parallel: x => deezer_album_info(opts, x),
+	}, (err, res) => {
+		let messages = [];
+		if (res) {
+			Object.keys(res).forEach(x => {
+				messages.push(res[x]);
+			})
+		}
+		callback({ messages: messages, error: err });
+	});
+}
+
+export const artist_info_last = (opts, callback) => {
+	parallel({
 		artist_info_lastfm_parallel: x => lastfm_artist_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
@@ -88,9 +116,8 @@ export const artist_info = (opts, callback) => {
 	});
 }
 
-export const album_info = (opts, callback) => {
+export const album_info_last = (opts, callback) => {
 	parallel({
-		album_info_deezer_parallel: x => deezer_album_info(opts, x),
 		album_info_lastfm_parallel: x => lastfm_album_info(opts, x)
 	}, (err, res) => {
 		let messages = [];
@@ -188,6 +215,6 @@ export const new_data = (opts, callback) => {
 	});
 }
 
-export const radio = (callback) => {
-	callback({ messages: radio_stations, error: false });
+export const radio = (opts, callback) => {
+	callback(radio_search(opts));
 }

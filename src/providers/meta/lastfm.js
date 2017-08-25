@@ -95,8 +95,6 @@ export const artist_info = (opts, callback) => {
 			if (response) {
 				const artist = response._artist_info.artist;
 				const data = get_response({ opts }, parse_lastfm_artist_info(artist))
-
-
 				callback(false, data);
 			} else {
 				callback(false, get_response(opts));
@@ -301,10 +299,8 @@ export const artist_artwork = (opts, callback) => {
 		if (s) {
 			const data = get_response(s.meta, {
 				type: Type.LASTFM_IMAGE,
-				images: s.result.images
+				images: s.result.images || []
 			})
-
-
 			callback(false, data);
 		} else {
 			callback(false, get_response(opts));
@@ -319,7 +315,7 @@ export const album_artwork = (opts, callback) => {
 		if (s) {
 			const data = get_response(s.meta, {
 				type: Type.LASTFM_IMAGE,
-				images: s.result.images
+				images: s.result.images || []
 			})
 
 			callback(false, data);

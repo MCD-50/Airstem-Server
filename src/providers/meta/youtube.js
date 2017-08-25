@@ -100,7 +100,7 @@ export const search_related = (opts, callback) => {
 	const track_name = opts.track_name || null;
 	const artist_name = opts.artist_name || null;
 
-	if (related_video_id == null && track_name != null && artist_name != null) {
+	if (related_video_id == null &&  track_name != null && artist_name != null && youtube_api_key) {
 		search({
 			query: track_name + " " + artist_name,
 			youtube_api_key: youtube_api_key
@@ -115,7 +115,6 @@ export const search_related = (opts, callback) => {
 					youtube_api_key: youtube_api_key,
 					related_video_id: result.id
 				};
-
 				search_related(_opts, callback);
 			}else{
 				callback(false, get_response(opts));
