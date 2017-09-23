@@ -32,13 +32,13 @@ export const search = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const artist_total = response._artists.total || 0;
-					const artist_next_page = (page + 1) * limit < artist_total ? page + limit : null;
+					const artist_next_page = (page + 1) * limit < artist_total ? page + limit : -1;
 
 					const album_total = response._albums.total || 0;
-					const album_next_page = (page + 1) * limit < album_total ? page + limit : null;
+					const album_next_page = (page + 1) * limit < album_total ? page + limit : -1;
 
 					const track_total = response._tracks.total || 0;
-					const track_next_page = (page + 1) * limit < track_total ? page + limit : null;
+					const track_next_page = (page + 1) * limit < track_total ? page + limit : -1;
 
 					const data = get_response({ opts }, {
 						type: Type.DEEZER_SEARCH,
@@ -78,7 +78,7 @@ export const artists = (opts, callback) => {
 				if (total && (page + 1) * limit < total) {
 					next_page += limit;
 				} else {
-					next_page = null;
+					next_page = -1;
 				}
 
 				const data = get_response({ opts, total, next_page }, parse_deezer_artists(artist));
@@ -111,7 +111,7 @@ export const albums = (opts, callback) => {
 				if (total && (page + 1) * limit < total) {
 					next_page += limit;
 				} else {
-					next_page = null;
+					next_page = -1;
 				}
 				const data = get_response({ opts, total, next_page }, parse_deezer_albums(album))
 				callback(false, data);
@@ -172,7 +172,6 @@ export const album_info = (opts, callback) => {
 			if (response) {
 				const album_info = response._album_info;
 				const data = get_response({ opts }, parse_deezer_album_info(album_info));
-
 
 				callback(false, data);
 			} else {

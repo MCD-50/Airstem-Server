@@ -32,19 +32,19 @@ export const search = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._search_track;
-					
+
 					const data = get_response({ opts, next_page: search.nextPageToken }, {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: {
-							meta: null,
+							meta: { next_page: search.nextPageToken },
 							result: parse_youtube_tracks(search.items)
 						},
 						artists: {
-							meta: null,
+							meta: { next_page: search.nextPageToken },
 							result: []
 						},
 						albums: {
-							meta: null,
+							meta: { next_page: search.nextPageToken },
 							result: []
 						}
 					})
@@ -100,15 +100,15 @@ export const search_related = (opts, callback) => {
 	const track_name = opts.track_name || null;
 	const artist_name = opts.artist_name || null;
 
-	if (related_video_id == null &&  track_name != null && artist_name != null && youtube_api_key) {
+	if (related_video_id == null && track_name != null && artist_name != null && youtube_api_key) {
 		search({
 			query: track_name + " " + artist_name,
 			youtube_api_key: youtube_api_key
 		}, (error, data) => {
-			if(data && data.result 
-				&& data.result.tracks 
-				&& data.result.tracks.result 
-				&& data.result.tracks.result.length > 0){
+			if (data && data.result
+				&& data.result.tracks
+				&& data.result.tracks.result
+				&& data.result.tracks.result.length > 0) {
 
 				const result = data.result.tracks.result[0];
 				const _opts = {
@@ -116,7 +116,7 @@ export const search_related = (opts, callback) => {
 					related_video_id: result.id
 				};
 				search_related(_opts, callback);
-			}else{
+			} else {
 				callback(false, get_response(opts));
 			}
 		})
