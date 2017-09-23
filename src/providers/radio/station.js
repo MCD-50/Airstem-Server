@@ -89,7 +89,7 @@ export const radio_search = (opts, callback) => {
 		callback(false, get_response({ opts }, {
 			type: Type.AIRSTEM_RADIO,
 			radios: {
-				meta: null,
+				meta: {},
 				result: radio_stations
 			}
 		}))
