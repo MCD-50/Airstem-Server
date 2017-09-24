@@ -23,7 +23,7 @@ export const parse_lastfm_albums = (albums) => {
 				artist_name: album.artist.name || album.artist,
 				mbid: album.mbid || null,
 				listeners: 0,
-				images: parse_lastfm_images(album.image)
+				images: parse_lastfm_images(album.image) || []
 			}
 		})
 }
@@ -38,7 +38,7 @@ export const parse_lastfm_tracks = (tracks) => {
 				artist_name: track.artist.name || track.artist,
 				listeners: Number(listeners), // optional
 				mbid: track.mbid || null,
-				images: track.image && parse_lastfm_images(track.image) // optional
+				images: track.image && parse_lastfm_images(track.image) || [] // optional
 			}
 		})
 }

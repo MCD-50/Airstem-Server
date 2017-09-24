@@ -18,7 +18,11 @@ export const search = (opts, callback) => {
 		const page = opts.deezer_page || 0;
 		const limit = opts.limit || 10;
 
-		const common = query + DEEZER_LIMIT + limit + DEEZER_SEARCH_INDEX + page;
+		let common = query + DEEZER_LIMIT + limit;
+
+		if(page != 0){
+			common = common + DEEZER_SEARCH_INDEX + page;
+		}
 
 		const url_track = DEEZER_SEARCH_TRACK + common;
 		const url_artist = DEEZER_SEARCH_ARTIST + common;
