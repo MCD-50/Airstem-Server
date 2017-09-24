@@ -169,14 +169,12 @@ export const album_info = (opts, callback) => {
 	const album_id = opts.album_id || null;
 	if (album_id) {
 		const url_album_info = DEEZER_ALBUM_INFO + album_id;
-
 		parallel({
 			_album_info: x => make_request(url_album_info, x),
 		}, (error, response) => {
 			if (response) {
 				const album_info = response._album_info;
 				const data = get_response({ opts }, parse_deezer_album_info(album_info));
-
 				callback(false, data);
 			} else {
 				callback(false, get_response(opts));

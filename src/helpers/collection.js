@@ -142,14 +142,14 @@ export const parse_deezer_albums = (albums) => {
 		})
 }
 
-export const parse_deezer_tracks = (tracks) => {
+export const parse_deezer_tracks = (tracks, album_name = null) => {
 	return tracks
 		.map(track => {
 			return {
 				type: Type.DEEZER_TRACK,
 				name: track.title,
 				artist_name: track.artist.name || null,
-				album_name: track.album && track.album.name || track.album.title || null,
+				album_name: track.album && track.album.name || track.album && track.album.title || album_name,
 				id: track.id,
 				images: track.album ? parse_deezer_images(track.album, 'cover')
 					: parse_deezer_images(track.artist, 'picture') || [] // optional
@@ -174,7 +174,7 @@ export const parse_deezer_album_info = (album) => {
 		artist_name: album.artist.name || null,
 		id: album.id || null,
 		images: parse_deezer_images(album, 'cover'),
-		tracks: parse_deezer_tracks(album.tracks.data) || []
+		tracks: parse_deezer_tracks(album.tracks.data, album.title) || []
 	}
 }
 
