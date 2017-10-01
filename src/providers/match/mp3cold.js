@@ -5,7 +5,7 @@ import {
 	MP3COLD_BASE, MP3COLD_LAST
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
-import { get_closest_track_match, get_response } from '../../helpers/util';
+import { get_closest_track_match, get_match_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -41,6 +41,7 @@ export const match = (opts, callback) => {
 					}
 				});
 
+
 				items = items.filter(x => (x.title && x.title.trim())
 					&& (x.download_url !== null && x.download_url !== undefined &&
 						x.stream_url !== null && x.stream_url !== undefined
@@ -49,8 +50,8 @@ export const match = (opts, callback) => {
 				items = items.map(x => {
 					return {
 						type: Type.MP3COLD_TRACK,
-						download_url: 'http://www.mp3cold.com' + x.download_url + x.id,
-						stream_url: 'http://www.mp3cold.com' + x.stream_url + x.id,
+						download_url: x.download_url + x.id,
+						stream_url: x.stream_url + x.id,
 						song_length: null,
 						title: x.title,
 						bit_rate: x.bit_rate,
@@ -59,7 +60,7 @@ export const match = (opts, callback) => {
 				});
 
 				is_online(items, (res) => {
-					const data = get_response({ opts }, {
+					const data = get_match_response({ opts }, {
 						type: Type.MP3COLD_MATCH,
 						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
 					})
@@ -68,10 +69,18 @@ export const match = (opts, callback) => {
 				});
 
 			} else {
-				callback(false, get_response(opts));
+				callback(false, get_match_response(opts,
+					{
+						type: Type.MP3COLD_MATCH,
+						match: {}
+					}));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(false, get_match_response(opts,
+			{
+				type: Type.MP3COLD_MATCH,
+				match: {}
+			}));
 	}
 }

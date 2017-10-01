@@ -8,7 +8,7 @@ import {
 } from '../../helpers/collection';
 import { search } from '../meta/youtube'
 import { is_online } from '../../helpers/internet';
-import { get_closest_track_match, get_response } from '../../helpers/util';
+import { get_closest_track_match, get_match_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -16,7 +16,7 @@ export const match = (opts, callback) => {
 	if (video_ids && video_ids.length > 0) {
 		get_url(video_ids, res => {
 			is_online(res, res1 => {
-				const data = get_response({ opts }, {
+				const data = get_match_response({ opts }, {
 					type: Type.YOUTUBE_MATCH,
 					match: res1
 				})
@@ -29,11 +29,19 @@ export const match = (opts, callback) => {
 				const item = data.result.tracks.result[0];
 				match({ video_ids: [item.id] }, callback);
 			} else {
-				callback(false, get_response(opts));
+				callback(false, get_match_response(opts,
+					{
+						type: Type.YOUTUBE_MATCH,
+						match: {}
+					}));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(false, get_match_response(opts,
+			{
+				type: Type.YOUTUBE_MATCH,
+				match: {}
+			}));
 	}
 }
 
@@ -52,16 +60,18 @@ export const match_fast = (opts, callback) => {
 			}
 		})
 		is_online(video_ids, res => {
-			const data = get_response({ opts }, {
+			const data = get_match_response({ opts }, {
 				type: Type.YOUTUBE_MATCH,
 				match: res
 			})
-
-
 			callback(false, data);
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(false, get_match_response(opts,
+			{
+				type: Type.YOUTUBE_MATCH,
+				match: {}
+			}));
 	}
 }
 

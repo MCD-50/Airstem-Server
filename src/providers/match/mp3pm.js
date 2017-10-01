@@ -5,7 +5,7 @@ import {
 	MP3PM_BASE, MP3PM_SEARCH, MP3PM_LAST
 } from '../../helpers/constant';
 import { Type } from '../../helpers/type';
-import { get_closest_track_match, get_response } from '../../helpers/util';
+import { get_closest_track_match, get_match_response } from '../../helpers/util';
 
 
 export const match = (opts, callback) => {
@@ -41,20 +41,27 @@ export const match = (opts, callback) => {
 				});
 
 				is_online(items, (res) => {
-					const data = get_response({ opts }, {
+					const data = get_match_response({ opts }, {
 						type: Type.MP3PM_MATCH,
 						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', 50)
 					})
 
-
 					callback(false, data);
 				});
 			} else {
-				callback(false, get_response(opts));
+				callback(false, get_match_response(opts,
+					{
+						type: Type.MP3PM_MATCH,
+						match: {}
+					}));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(false, get_match_response(opts,
+			{
+				type: Type.MP3PM_MATCH,
+				match: {}
+			}));
 	}
 }
 
@@ -97,7 +104,11 @@ export const radio = (opts, callback) => {
 				callback(false, data);
 			});
 		} else {
-			callback(false, get_response(opts));
+			callback(false, get_match_response(opts,
+				{
+					type: Type.MP3PM_MATCH,
+					match: {}
+				}));
 		}
 	});
 }

@@ -8,6 +8,13 @@ export const get_response = (meta = {}, result = []) => {
 }
 
 
+export const get_match_response = (meta = {}, result = {}) => {
+	return {
+		meta: meta,
+		result: result
+	}
+}
+
 export const get_closest_image_match = (value, _array, key, r_first_match = false) => {
 	const result = get_closest_match(value, _array, key, r_first_match);
 	if (result && typeof (result) != 'obj') {

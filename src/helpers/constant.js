@@ -85,10 +85,10 @@ export const PLEER_DEFAULTS = '&sort_mode=0&sort_by=0&onlydata=true&target=track
 export const PLEER_TRACK_LINK = 'http://pleer.com/site_api/files/get_url?action=download&id=';
 
 
-export const MIMP3_BASE = 'http://www.mimp3s.com/';
+export const MIMP3_BASE = 'http://www.mimp3.com/';
 export const MIMP3_LAST = '-mp3.html';
 
-export const SOUNDCLOUD_BASE = 'https://api.soundcloud.com/search/sounds';
+export const SOUNDCLOUD_BASE = 'http://api.soundcloud.com/tracks.json';
 export const SOUNDCLOUD_API = SOUNDCLOUD_BASE + '?client_id=';
 export const SOUNDCLOUD_LIMIT= '&limit=';
 export const SOUNDCLOUD_QUERY = '&q=';

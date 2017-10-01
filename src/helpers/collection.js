@@ -214,6 +214,7 @@ export const parse_youtube_match = (formats, id) => {
 				width: x.width || null,
 				height: x.height || null,
 				download_url: x.url,
+				song_length: null,
 				id: id,
 				extension: x.ext
 			}
