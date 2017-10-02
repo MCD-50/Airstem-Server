@@ -10,10 +10,10 @@ import { match as youtube_match, match_fast } from '../providers/match/youtube';
 
 export const match = (opts, callback) => {
 	parallel({
-		mimp3_parallel: x => mimp3_match(opts, x),
-		mp3cold_parallel: y => mp3cold_match(opts, y),
+		//mimp3_parallel: x => mimp3_match(opts, x),
+		//mp3cold_parallel: y => mp3cold_match(opts, y),
 		mp3pm_parallel: z => mp3pm_match(opts, z),
-		pleer_parallel: x1 => pleer_match(opts, x1),
+		//pleer_parallel: x1 => pleer_match(opts, x1),
 		youtube_parallel: y1 => youtube_match(opts, y1),
 		soundcloud_parallel: z1 => soundcloud_match(opts, z1),
 	}, (err, res) => {
