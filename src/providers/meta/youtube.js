@@ -32,23 +32,41 @@ export const search = (opts, callback) => {
 			(error, response) => {
 				if (response) {
 					const search = response._search_track;
-
-					const data = get_response({ opts, next_page: search.nextPageToken }, {
-						type: Type.YOUTUBE_SEARCH,
-						tracks: {
-							meta: { next_page: search.nextPageToken },
-							result: parse_youtube_tracks(search.items)
-						},
-						artists: {
-							meta: { next_page: search.nextPageToken },
-							result: []
-						},
-						albums: {
-							meta: { next_page: search.nextPageToken },
-							result: []
-						}
-					})
-					callback(false, data);
+					if (search) {
+						const data = get_response({ opts, next_page: search.nextPageToken }, {
+							type: Type.YOUTUBE_SEARCH,
+							tracks: {
+								meta: { next_page: search.nextPageToken },
+								result: parse_youtube_tracks(search.items)
+							},
+							artists: {
+								meta: { next_page: search.nextPageToken },
+								result: []
+							},
+							albums: {
+								meta: { next_page: search.nextPageToken },
+								result: []
+							}
+						})
+						callback(false, data);
+					}else{
+						const data = get_response({ opts, next_page: null }, {
+							type: Type.YOUTUBE_SEARCH,
+							tracks: {
+								meta: { next_page: null },
+								result: []
+							},
+							artists: {
+								meta: { next_page: null },
+								result: []
+							},
+							albums: {
+								meta: { next_page: null },
+								result: []
+							}
+						})
+						callback(false, data);
+					}
 				} else {
 					callback(false, get_response(opts));
 				}

@@ -50,12 +50,18 @@ export const match = (opts, callback) => {
 						stream_url: 'http://www.mimp3s.live/' + x.stream_url
 					})
 				});
-				
+
 				download_link(items, (res) => {
 					is_online(res, (res1) => {
+						let match = [];
+						if (opts.manual_match) {
+							match = res1;
+						} else {
+							match.push(get_closest_track_match(common, res1, 'title', false, 50));
+						}
 						const data = get_match_response({ opts }, {
 							type: Type.MIMP3_MATCH,
-							match: opts.manual_match ? res1 : get_closest_track_match(common, res1, 'title', 50)
+							match: match
 						})
 						callback(false, data);
 					});
@@ -65,7 +71,7 @@ export const match = (opts, callback) => {
 				callback(false, get_match_response(opts,
 					{
 						type: Type.MIMP3_MATCH,
-						match: {}
+						match: []
 					}));
 			}
 		});
@@ -73,7 +79,7 @@ export const match = (opts, callback) => {
 		callback(false, get_match_response(opts,
 			{
 				type: Type.MIMP3_MATCH,
-				match: {}
+				match: []
 			}));
 	}
 }

@@ -27,9 +27,16 @@ export const match = (opts, callback) => {
 				const items = parse_soundcloud_tracks(body, soundcloud_api_key);
 
 				is_online(items, res => {
+					let match = [];
+					if (opts.manual_match) {
+						match = res;
+					} else {
+						match.push(get_closest_track_match(common, res, 'title', false, 50));
+					}
+
 					const data = get_match_response({ opts }, {
 						type: Type.SOUNDCLOUD_MATCH,
-						match: opts.manual_match ? res : get_closest_track_match(common, res, 'title', false, 50)
+						match: match
 					})
 
 
@@ -40,7 +47,7 @@ export const match = (opts, callback) => {
 				callback(false, get_match_response(opts,
 					{
 						type: Type.SOUNDCLOUD_MATCH,
-						match: {}
+						match: []
 					}));
 			}
 		});
@@ -48,7 +55,7 @@ export const match = (opts, callback) => {
 		callback(false, get_match_response(opts,
 			{
 				type: Type.SOUNDCLOUD_MATCH,
-				match: {}
+				match: []
 			}));
 	}
 }

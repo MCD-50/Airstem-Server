@@ -32,7 +32,7 @@ export const match = (opts, callback) => {
 				callback(false, get_match_response(opts,
 					{
 						type: Type.YOUTUBE_MATCH,
-						match: {}
+						match: []
 					}));
 			}
 		});
@@ -40,7 +40,7 @@ export const match = (opts, callback) => {
 		callback(false, get_match_response(opts,
 			{
 				type: Type.YOUTUBE_MATCH,
-				match: {}
+				match: []
 			}));
 	}
 }
@@ -70,7 +70,7 @@ export const match_fast = (opts, callback) => {
 		callback(false, get_match_response(opts,
 			{
 				type: Type.YOUTUBE_MATCH,
-				match: {}
+				match: []
 			}));
 	}
 }
