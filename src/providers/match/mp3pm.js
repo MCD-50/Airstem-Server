@@ -22,7 +22,7 @@ export const match = (opts, callback) => {
 		request(url_match, (error, response, html) => {
 			if (!error && response.statusCode == 200) {
 				// Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-				const items = [];
+				let items = [];
 				const $html = cheerio.load(response.body);
 				$html('ul.mp3list').children().each(function (i, e) {
 					if (e.tagName === 'li') {
@@ -40,21 +40,21 @@ export const match = (opts, callback) => {
 					}
 				});
 
-				is_online(items, (res) => {
+				//is_online(items, (res) => {
 					let match = [];
 					if (opts.manual_match) {
-						match = res;
+						match = items;
 					} else {
-						match.push(get_closest_track_match(common, res, 'title', false, 50));
+						match.push(get_closest_track_match(common, items, 'title', false, 50));
 					}
-
+				
 					const data = get_match_response({ opts }, {
 						type: Type.MP3PM_MATCH,
 						match: match
 					})
 
 					callback(false, data);
-				});
+				//});
 			} else {
 				callback(false, get_match_response(opts,
 					{

@@ -17,6 +17,8 @@ export const is_online = (items, callback) => {
 			}
 		}
 
+		let count = 0;
+
 		return new Promise((resolve, reject) => {
 			request(options, (error, response) => {
 				if (!error && response.statusCode == 200 && response.headers &&
