@@ -27,6 +27,17 @@ export const get_closest_image_match = (value, _array, key, r_first_match = fals
 
 export const get_closest_track_match = (value, _array, key, r_first_match = false, threshold = 40) => {
 	const result = get_closest_match(value, _array, key, r_first_match, threshold);
+	_array = _array.filter(x => {
+		if(x && x.song_length){
+			const songLength = x.song_length.toString().split(':')[0];
+			if(songLength && parseInt(songLength) > 2){
+				return x;
+			}
+		}else{
+			return x;
+		}
+	})
+	
 	if (result && typeof (result) != 'obj') {
 		return _array.filter(x => x[key] === result)[0] || {};
 	} else if (result) {
