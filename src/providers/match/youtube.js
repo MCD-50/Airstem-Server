@@ -23,8 +23,9 @@ export const match = (opts, callback) => {
 				callback(false, data);
 			});
 		});
-	} else if (opts.artist_name && opts.name) {
-		search({ query: opts.artist_name + '-' + opts.name }, (error, data) => {
+	} else if (opts.artist_name || opts.name) {
+		const query = opts.artist_name && opts.name ? opts.artist_name + '-' + opts.name : (opts.artist_name ? opts.artist_name : opts.name);
+		search({ query: query }, (error, data) => {
 			if (data && data.result && data.result.tracks && data.result.tracks.result && data.result.tracks.result.length > 0) {
 				const item = data.result.tracks.result[0];
 				match({ video_ids: [item.id] }, callback);
