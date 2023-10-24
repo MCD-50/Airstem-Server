@@ -1,6 +1,6 @@
 import {
     LASTFM_KEY, METRO_LYRICS_KEY, SOUNDCLOUD_KEY,
-    YOUTUBE_KEY_ONE, YOUTUBE_KEY_TWO
+    YOUTUBE_KEY_ONE, YOUTUBE_KEY_TWO, SPOTIFY_KEY
 } from './key';
 
 
@@ -67,6 +67,18 @@ export const YOUTUBE_NEXT_PAGE = '&pageToken=';
 export const YOUTUBE_DEFAULTS = YOUTUBE_RESULT_TYPE + YOUTUBE_SAFE_SEARCH + YOUTUBE_VIDEO_CATEGORY_ID;
 export const YOUTUBE_MATCH_BASE = 'https://www.youtube.com/watch?v=';
 
+//spotify constants
+export const SPOTIFY_BASE = 'http://api.spotify.com/';
+export const SEARCH_BASE = SPOTIFY_BASE + 'search';
+export const SPOTIFY_SEARCH_TRACK = SEARCH_BASE + '?q=';
+export const SPOTIFY_SEARCH_ARTIST = SEARCH_BASE + '/artist' + '?q=';
+export const SPOTIFY_SEARCH_ALBUM = SEARCH_BASE + '/album' + '?q=';
+export const SPOTIFY_CHART = SPOTIFY_BASE + 'chart/'
+export const SPOTIFY_SEARCH_INDEX = '&index=';
+export const SPOTIFY_ALBUM_INFO = SPOTIFY_BASE + 'album/';
+export const SPOTIFY_ARTIST_INFO = SPOTIFY_BASE + 'artist/';
+export const SPOTIFY_ARTIST_TOP_TRACKS_INDEX = '?index=';
+export const SPOTIFY_LIMIT = '&limit=';
 
 
 //match urls
@@ -94,4 +106,10 @@ export const SOUNDCLOUD_LIMIT= '&limit=';
 export const SOUNDCLOUD_QUERY = '&q=';
 export const SOUNDCLOUD_DEFAULT_KEY = SOUNDCLOUD_KEY;
 
+
+export const SPOTIFY_BASE = 'http://api.spotify.com/tracks.json';
+export const SPOTIFY_API = SPOTIFY_BASE + '?client_id=';
+export const SPOTIFY_LIMIT= '&limit=';
+export const SPOTIFY_QUERY = '&q=';
+export const SPOTIFY_DEFAULT_KEY = SPOTIFY_KEY;
 
