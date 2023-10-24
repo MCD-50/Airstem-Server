@@ -38,7 +38,7 @@ export const match = (opts, callback) => {
 			}
 		});
 	} else {
-		callback(false, get_match_response(opts,
+		callback(true, get_match_response(opts,
 			{
 				type: Type.YOUTUBE_MATCH,
 				match: []
@@ -65,10 +65,10 @@ export const match_fast = (opts, callback) => {
 				type: Type.YOUTUBE_MATCH,
 				match: res
 			})
-			callback(false, data);
+			callback(true, data);
 		});
 	} else {
-		callback(false, get_match_response(opts,
+		callback(true, get_match_response(opts,
 			{
 				type: Type.YOUTUBE_MATCH,
 				match: []
