@@ -26,6 +26,15 @@ import {
 } from '../providers/meta/youtube';
 
 import {
+	search as spotify_search_all,
+	artists as spotify_search_artists,
+	albums as spotify_search_albums,
+	album_info as spotify_album_info,
+	artist_info as spotify_artist_info,
+	top_data as spotify_chart_data
+} from '../providers/meta/spotify';
+
+import {
 	radio_search
 } from '../providers/radio/station';
 
