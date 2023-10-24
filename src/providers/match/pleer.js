@@ -57,7 +57,7 @@ export const match = (opts, callback) => {
 						if (opts.manual_match) {
 							match = res1;
 						} else {
-							match.push(get_closest_track_match(common, res1, 'title', false, 50));
+							match.push(get_closest_track_match(common, res1, 'title', true, 50));
 						}
 						const data = get_match_response({ opts }, {
 							type: Type.PLEER_MATCH,
@@ -65,12 +65,12 @@ export const match = (opts, callback) => {
 						})
 
 
-						callback(false, data);
+						callback(true, data);
 					})
 				});
 
 			} else {
-				callback(false, get_match_response(opts,
+				callback(true, get_match_response(opts,
 					{
 						type: Type.PLEER_MATCH,
 						match: []
@@ -78,7 +78,7 @@ export const match = (opts, callback) => {
 			}
 		});
 	} else {
-		callback(false, get_match_response(opts,
+		callback(true, get_match_response(opts,
 			{
 				type: Type.PLEER_MATCH,
 				match: []
