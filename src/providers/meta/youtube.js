@@ -48,7 +48,7 @@ export const search = (opts, callback) => {
 								result: []
 							}
 						})
-						callback(false, data);
+						callback(true, data);
 					}else{
 						const data = get_response({ opts, next_page: null }, {
 							type: Type.YOUTUBE_SEARCH,
@@ -65,14 +65,14 @@ export const search = (opts, callback) => {
 								result: []
 							}
 						})
-						callback(false, data);
+						callback(true, data);
 					}
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -101,13 +101,13 @@ export const track_info = (opts, callback) => {
 						track: parse_youtube_tracks(track_info.items)[0]
 					})
 
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -135,7 +135,7 @@ export const search_related = (opts, callback) => {
 				};
 				search_related(_opts, callback);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		})
 	} else if (related_video_id && youtube_api_key) {
@@ -161,13 +161,13 @@ export const search_related = (opts, callback) => {
 						type: Type.YOUTUBE_SEARCH,
 						tracks: parse_youtube_tracks(search.items)
 					})
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -195,13 +195,13 @@ export const new_tracks = (opts, callback) => {
 						tracks: parse_youtube_tracks(search.items)
 					})
 
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -230,12 +230,12 @@ export const track_artwork = (opts, callback) => {
 					})
 
 
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
