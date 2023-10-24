@@ -256,3 +256,77 @@ export const parse_metro_lyrics = (json_data) => {
 		songlinetimestamps: json_data.songLinetimestamps
 	}
 }
+
+export const parse_spotify_artists = (artists) => {
+	return artists
+		.map(artist => {
+			return {
+				type: Type.SPOTIFY_ARTIST,
+				name: artist.name,
+				id: artist.id || null,
+				tracklist_url: artist.tracklist,
+				images: parse_spotify_images(artist, 'picture') // optional
+			}
+		}).filter(artist => artist.images.length > 0);
+
+}
+
+export const parse_spotify_albums = (albums) => {
+	return albums
+		.map(album => {
+			return {
+				type: Type.SPOTIFY_ALBUM,
+				name: album.title,
+				artist_name: album.artist.name || null,
+				id: album.id || null,
+				images: parse_spotify_images(album, 'cover')
+			}
+		})
+}
+
+export const parse_spotify_tracks = (tracks, album_name = null) => {
+	return tracks
+		.map(track => {
+			return {
+				type: Type.SPOTIFY_TRACK,
+				name: track.title,
+				artist_name: track.artist.name || null,
+				album_name: track.album && track.album.name || track.album && track.album.title || album_name,
+				id: track.id,
+				images: track.album ? parse_spotify_images(track.album, 'cover')
+					: parse_spotify_images(track.artist, 'picture') || [] // optional
+			}
+		})
+}
+
+export const parse_spotify_artist_info = (artist, tracks = []) => {
+	return {
+		type: Type.SPOTIFY_ARTIST,
+		name: artist.name,
+		id: artist.id || null,
+		tracks: tracks,
+		images: parse_spotify_images(artist, 'picture') // optional
+	}
+}
+
+export const parse_spotify_album_info = (album) => {
+	return {
+		type: Type.SPOTIFY_ALBUM,
+		name: album.title,
+		artist_name: album.artist.name || null,
+		id: album.id || null,
+		images: parse_spotify_images(album, 'cover'),
+		tracks: parse_spotify_tracks(album.tracks.data, album.title) || []
+	}
+}
+
+export const parse_spotify_images = (image, key) => {
+	return Object.keys(image)
+		.filter(x => x.includes(key))
+		.map(y => {
+			return {
+				url: image[y] || '',
+				size: y.split('_')[1] || 'og'
+			}
+		}).filter(image => image.url !== '');
+}
