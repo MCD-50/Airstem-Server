@@ -51,13 +51,13 @@ export const search = (opts, callback) => {
 						albums: { meta: { album_total, album_next_page }, result: parse_deezer_albums(response._albums.data) }
 					})
 
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -86,13 +86,13 @@ export const artists = (opts, callback) => {
 				}
 
 				const data = get_response({ opts, total, next_page }, parse_deezer_artists(artist));
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -118,13 +118,13 @@ export const albums = (opts, callback) => {
 					next_page = -1;
 				}
 				const data = get_response({ opts, total, next_page }, parse_deezer_albums(album))
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -140,14 +140,14 @@ export const artist_info = (opts, callback) => {
 				const artist_info = response._artist_info;
 				get_artist_tracks(artist_info.tracklist, (tracks) => {
 					const data = get_response({ opts }, parse_deezer_artist_info(artist_info, tracks));
-					callback(false, data);
+					callback(true, data);
 				})
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -175,13 +175,13 @@ export const album_info = (opts, callback) => {
 			if (response) {
 				const album_info = response._album_info;
 				const data = get_response({ opts }, parse_deezer_album_info(album_info));
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -204,9 +204,9 @@ export const top_data = (opts, callback) => {
 			});
 
 
-			callback(false, data);
+			callback(true, data);
 		} else {
-			callback(false, get_response(opts));
+			callback(true, get_response(opts));
 		}
 	});
 }
@@ -220,9 +220,9 @@ export const artist_artwork = (opts, callback) => {
 				images: get_closest_image_match(opts.artist_name, s.result, 'name')
 			});
 			
-			callback(false, data);
+			callback(true, data);
 		} else {
-			callback(false, get_response(opts));
+			callback(true, get_response(opts));
 		}
 	})
 }
@@ -235,9 +235,9 @@ export const album_artwork = (opts, callback) => {
 				images: get_closest_image_match(opts.album_name, s.result, 'name')
 			});
 
-			callback(false, data);
+			callback(true, data);
 		} else {
-			callback(false, get_response(opts));
+			callback(true, get_response(opts));
 		}
 	})
 }
