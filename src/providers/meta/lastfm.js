@@ -69,13 +69,13 @@ export const search = (opts, callback) => {
 						}
 					})
 
-					callback(false, data);
+					callback(true, data);
 				} else {
-					callback(false, get_response(opts));
+					callback(true, get_response(opts));
 				}
 			});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -95,13 +95,13 @@ export const artist_info = (opts, callback) => {
 			if (response) {
 				const artist = response._artist_info.artist;
 				const data = get_response({ opts }, parse_lastfm_artist_info(artist))
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -122,13 +122,13 @@ export const album_info = (opts, callback) => {
 			if (response) {
 				const album = response._album_info.album;
 				const data = get_response({ opts }, parse_lastfm_album_info(album))
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -156,7 +156,7 @@ export const track_info = (opts, callback) => {
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -184,13 +184,13 @@ export const artist_top_albums = (opts, callback) => {
 				})
 
 
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -218,13 +218,13 @@ export const artist_top_tracks = (opts, callback) => {
 					tracks: parse_lastfm_tracks(response._artist_tracks.toptracks.track)
 				})
 
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -251,13 +251,13 @@ export const trending_artist = (opts, callback) => {
 				})
 
 
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -283,13 +283,13 @@ export const trending_tracks = (opts, callback) => {
 				})
 
 
-				callback(false, data);
+				callback(true, data);
 			} else {
-				callback(false, get_response(opts));
+				callback(true, get_response(opts));
 			}
 		});
 	} else {
-		callback(false, get_response(opts));
+		callback(true, get_response(opts));
 	}
 }
 
@@ -301,9 +301,9 @@ export const artist_artwork = (opts, callback) => {
 				type: Type.LASTFM_IMAGE,
 				images: s.result.images || []
 			})
-			callback(false, data);
+			callback(true, data);
 		} else {
-			callback(false, get_response(opts));
+			callback(true, get_response(opts));
 		}
 	})
 }
@@ -318,9 +318,9 @@ export const album_artwork = (opts, callback) => {
 				images: s.result.images || []
 			})
 
-			callback(false, data);
+			callback(true, data);
 		} else {
-			callback(false, get_response(opts));
+			callback(true, get_response(opts));
 		}
 	})
 }
