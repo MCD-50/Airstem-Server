@@ -31,7 +31,7 @@ export const match = (opts, callback) => {
 					if (opts.manual_match) {
 						match = res;
 					} else {
-						match.push(get_closest_track_match(common, res, 'title', false, 50));
+						match.push(get_closest_track_match(common, res, 'title', true, 50));
 					}
 
 
@@ -41,11 +41,11 @@ export const match = (opts, callback) => {
 					})
 
 
-					callback(false, data);
+					callback(true, data);
 				});
 
 			} else {
-				callback(false, get_match_response(opts,
+				callback(true, get_match_response(opts,
 					{
 						type: Type.SOUNDCLOUD_MATCH,
 						match: []
@@ -53,7 +53,7 @@ export const match = (opts, callback) => {
 			}
 		});
 	} else {
-		callback(false, get_match_response(opts,
+		callback(true, get_match_response(opts,
 			{
 				type: Type.SOUNDCLOUD_MATCH,
 				match: []
