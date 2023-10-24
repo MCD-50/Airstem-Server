@@ -45,7 +45,7 @@ export const match = (opts, callback) => {
 					if (opts.manual_match) {
 						match = items;
 					} else {
-						match.push(get_closest_track_match(common, items, 'title', false, 50));
+						match.push(get_closest_track_match(common, items, 'title', true, 50));
 					}
 				
 					const data = get_match_response({ opts }, {
@@ -53,10 +53,10 @@ export const match = (opts, callback) => {
 						match: match
 					})
 
-					callback(false, data);
+					callback(true, data);
 				//});
 			} else {
-				callback(false, get_match_response(opts,
+				callback(true, get_match_response(opts,
 					{
 						type: Type.MP3PM_MATCH,
 						match: []
@@ -108,10 +108,10 @@ export const radio = (opts, callback) => {
 						radio: res
 					}
 				}
-				callback(false, data);
+				callback(true, data);
 			});
 		} else {
-			callback(false, get_match_response(opts,
+			callback(true, get_match_response(opts,
 				{
 					type: Type.MP3PM_MATCH,
 					match: []
