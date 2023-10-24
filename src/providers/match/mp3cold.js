@@ -64,7 +64,7 @@ export const match = (opts, callback) => {
 					if (opts.manual_match) {
 						match = res;
 					} else {
-						match.push(get_closest_track_match(common, res, 'title', false, 50));
+						match.push(get_closest_track_match(common, res, 'title', true, 50));
 					}
 					const data = get_match_response({ opts }, {
 						type: Type.MP3COLD_MATCH,
