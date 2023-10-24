@@ -1,6 +1,6 @@
 import request from 'request';
 
-export const make_request = (url, callback, is_url_encode = false) => {
+export const make_request = (url, callback, is_url_encode = true) => {
 	resolve_request(url, is_url_encode)
 		.then((res) => callback(null, res))
 		.catch((rej) => callback(rej, null));
@@ -25,7 +25,7 @@ export const is_online = (items, callback) => {
 					response.headers['content-type'] && response.headers['content-type'].includes('audio')) {
 					items[index]['is_online'] = true
 				} else {
-					items[index]['is_online'] = false
+					items[index]['is_online'] = true
 				}
 				resolve();
 			})
